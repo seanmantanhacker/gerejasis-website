@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIS (Sooyoungro Indonesia Service) | Gereja Indonesia di Busan</title>
+
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="Website resmi Sooyoungro Indonesia Service (SIS) - Komunitas & Gereja Kristen Indonesia di Busan, Korea Selatan. Ibadah Minggu setiap jam 12:00 KST di 수영로교회 비전센터 2층 (Bexco Station Exit 1).">
+  <meta name="keywords" content="Gereja SIS Busan, Sooyoungro Indonesia Service, Gereja Indonesia di Korea, Gereja Indonesia Busan, 수영로교회 인도네시아 예배, Indonesian Church in Busan, Bexco Station">
+  <meta name="author" content="Sooyoungro Indonesia Service">
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="SIS - Sooyoungro Indonesia Service | Gereja Indonesia di Busan">
+  <meta property="og:description" content="Komunitas & Ibadah Indonesia di Busan, Korea Selatan. Bergabunglah bersama keluarga di perantauan! Our Church, Your Home.">
+  <meta property="og:image" content="./assets/images/hero-congregation.png">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./assets/images/logo.png">
+
+  <!-- Google Fonts: Outfit (Headings) & Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (standard brand icons: Instagram, TikTok, YouTube, Facebook, WhatsApp) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Dynamic Lighting & Particles Canvas -->
+  <div class="ambient-background" aria-hidden="true"></div>
+  <canvas id="particles-canvas" class="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- Site Header & Brand Navigation -->
+  <header class="site-header" id="header">
+    <div class="container">
+      <div class="header-top">
+        <a href="#home" class="church-brand" aria-label="Beranda SIS Busan">
+          <img src="./assets/images/logo.png" alt="Sooyoungro Presbyterian Church Logo" class="brand-logo-img">
+          <div class="brand-texts">
+            <span class="brand-korean">대한예수교장로회 수영로교회</span>
+            <span class="brand-name">SIS BUSAN</span>
+            <span class="brand-badge" data-i18n="brandBadge">Gereja Indonesia di Busan</span>
+          </div>
+        </a>
+
+        <div class="header-right">
+          <div class="motto-banner" aria-label="Motto Gereja">
+            <span class="motto-line1">OUR CHURCH</span>
+            <span class="motto-line2">YOUR HOME</span>
+          </div>
+
+          <!-- Language Selector -->
+          <div class="lang-selector" role="group" aria-label="Pilih Bahasa">
+            <button class="lang-btn active" data-lang="id" title="Bahasa Indonesia">ID</button>
+            <button class="lang-btn" data-lang="en" title="English">EN</button>
+            <button class="lang-btn" data-lang="kr" title="한국어">KR</button>
+          </div>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            ☰
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Bar -->
+      <nav class="nav-bar" aria-label="Main Navigation">
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="#home" class="nav-link active" data-i18n="navHome">BERANDA</a></li>
+          <li class="nav-item"><a href="#visit-us" class="nav-link" data-i18n="navVisit">JADWAL IBADAH</a></li>
+          <li class="nav-item"><a href="#online-service" class="nav-link" data-i18n="navOnline">IBADAH ONLINE</a></li>
+          <li class="nav-item"><a href="#activities" class="nav-link" data-i18n="navActivities">AKTIVITAS GEREJA</a></li>
+          <li class="nav-item"><a href="#find-us" class="nav-link" data-i18n="navFind">LOKASI</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================================
+         Hero Section
+         ========================================================== -->
+    <section class="hero-section" id="home">
+      <div class="container hero-content">
+        <div class="hero-pill">
+          <span>✨</span>
+          <span data-i18n="heroPill">Selamat Datang di Sooyoungro Indonesia Service</span>
+        </div>
+
+        <h1 class="hero-title" data-i18n="heroTitle">Gereja Indonesia di Busan, Korea Selatan</h1>
+
+        <div class="hero-verse">
+          <p data-i18n="heroVerse">“Firman-Mu itu pelita bagi kakiku dan terang bagi jalanku.”</p>
+          <cite data-i18n="heroVerseCite">— Mazmur 119:105</cite>
+        </div>
+
+        <!-- Featured Congregation Photo Slideshow -->
+        <div class="hero-photo-wrapper">
+          <div class="hero-slideshow" id="hero-slideshow">
+            <div class="hero-slide active">
+              <img src="./assets/images/hero-congregation.png" alt="Keluarga Besar Sooyoungro Indonesia Service Busan" loading="eager">
+            </div>
+            <!-- Dummy/template slides — ganti dengan <img src="..."> saat aset foto sudah tersedia -->
+            <div class="hero-slide">
+              <div class="hero-slide-placeholder">
+                <span class="hero-slide-placeholder-icon" aria-hidden="true">🖼️</span>
+                <p data-i18n="slidePlaceholder">Foto akan segera hadir</p>
+              </div>
+            </div>
+            <div class="hero-slide">
+              <div class="hero-slide-placeholder">
+                <span class="hero-slide-placeholder-icon" aria-hidden="true">🖼️</span>
+                <p data-i18n="slidePlaceholder">Foto akan segera hadir</p>
+              </div>
+            </div>
+            <div class="hero-slide">
+              <div class="hero-slide-placeholder">
+                <span class="hero-slide-placeholder-icon" aria-hidden="true">🖼️</span>
+                <p data-i18n="slidePlaceholder">Foto akan segera hadir</p>
+              </div>
+            </div>
+
+            <button class="slide-nav prev" type="button" aria-label="Foto sebelumnya">‹</button>
+            <button class="slide-nav next" type="button" aria-label="Foto berikutnya">›</button>
+
+            <div class="slide-dots" role="tablist" aria-label="Pilih foto">
+              <button class="slide-dot active" type="button" data-slide-index="0" aria-label="Foto 1"></button>
+              <button class="slide-dot" type="button" data-slide-index="1" aria-label="Foto 2"></button>
+              <button class="slide-dot" type="button" data-slide-index="2" aria-label="Foto 3"></button>
+              <button class="slide-dot" type="button" data-slide-index="3" aria-label="Foto 4"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Action Buttons -->
+        <div class="hero-actions">
+          <a href="#visit-us" class="btn btn-primary">
+            <span>📅</span> <span data-i18n="btnSchedule">Jadwal Ibadah (Visit Us)</span>
+          </a>
+          <a href="https://www.youtube.com/@sisindonesia1611/streams" target="_blank" rel="noopener" class="btn btn-secondary">
+            <span>🔴</span> <span data-i18n="btnOnline">Ibadah Online (YouTube Live) ↗</span>
+          </a>
+          <a href="#find-us" class="btn btn-accent">
+            <span>📍</span> <span data-i18n="btnDirections">Petunjuk Arah ke Gereja</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         Live Sunday Service Countdown Banner
+         ========================================================== -->
+    <aside class="countdown-strip" aria-label="Countdown Ibadah Minggu">
+      <div class="container countdown-container">
+        <div class="countdown-info">
+          <div class="live-pulse" aria-hidden="true"></div>
+          <div>
+            <div class="countdown-title" data-i18n="countdownTitle">Ibadah Raya Minggu Berikutnya</div>
+            <div class="countdown-subtitle" id="countdown-subtitle" data-i18n="countdownSubtitle">Setiap Minggu Pukul 12:00 - 14:00 KST (Waktu Korea)</div>
+          </div>
+        </div>
+
+        <div class="countdown-timer" id="service-countdown" aria-live="polite">
+          <div class="timer-box">
+            <span class="timer-num" id="timer-days">00</span>
+            <span class="timer-label" data-i18n="timerDays">Hari</span>
+          </div>
+          <span style="color: var(--primary-light); font-weight: 700;">:</span>
+          <div class="timer-box">
+            <span class="timer-num" id="timer-hours">00</span>
+            <span class="timer-label" data-i18n="timerHours">Jam</span>
+          </div>
+          <span style="color: var(--primary-light); font-weight: 700;">:</span>
+          <div class="timer-box">
+            <span class="timer-num" id="timer-mins">00</span>
+            <span class="timer-label" data-i18n="timerMins">Menit</span>
+          </div>
+          <span style="color: var(--primary-light); font-weight: 700;">:</span>
+          <div class="timer-box">
+            <span class="timer-num" id="timer-secs">00</span>
+            <span class="timer-label" data-i18n="timerSecs">Detik</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==========================================================
+         Section: Schedule & Visit Us
+         ========================================================== -->
+    <section class="section" id="visit-us">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="sectionVisit">JADWAL & IBADAH</span>
+          <h2 class="section-title" data-i18n="visitTitle">Jadwal Ibadah & Persekutuan</h2>
+          <p class="section-subtitle" data-i18n="visitSubtitle">Mari bergabung bertumbuh dalam iman dan firman Tuhan bersama saudara seiman di Busan.</p>
+        </div>
+
+        <div class="schedule-grid">
+          <!-- Sunday Service (Main) -->
+          <article class="schedule-card featured">
+            <span class="card-top-tag" data-i18n="schSundayTag">Ibadah Utama</span>
+            <div class="schedule-card-icon">⛪</div>
+            <h3 class="schedule-card-title" data-i18n="schSundayTitle">Sunday Service</h3>
+            <div class="schedule-card-time">
+              <span>🕒</span> 12:00 – 14:00 KST
+            </div>
+            <p class="schedule-card-desc" data-i18n="schSundayDesc">Ibadah Raya Minggu berbahasa Indonesia. Pujian penyembahan, pemberitaan firman Tuhan, dan dilanjutkan dengan makan siang & ramah tamah bersama.</p>
+          </article>
+
+          <!-- Komsel Daerah Kyungsung -->
+          <article class="schedule-card">
+            <span class="card-top-tag" data-i18n="schKomselTag">Komsel</span>
+            <div class="schedule-card-icon">🤝</div>
+            <h3 class="schedule-card-title" data-i18n="schKyungsungTitle">Komsel Daerah Kyungsung</h3>
+            <div class="schedule-card-time">
+              <span>🕒</span> <span data-i18n="schKyungsungTime">Setiap Rabu, 19:00 – 21:00 KST</span>
+            </div>
+            <p class="schedule-card-desc" data-i18n="schKyungsungDesc">Persekutuan komsel daerah Kyungsung, waktu sharing firman Tuhan serta doa syafaat bersama.</p>
+          </article>
+
+          <!-- Komsel Daerah Busan (Online) -->
+          <article class="schedule-card">
+            <span class="card-top-tag" style="background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border-color: rgba(56, 189, 248, 0.4);" data-i18n="schKomselOnlineTag">Komsel Online</span>
+            <div class="schedule-card-icon">💻</div>
+            <h3 class="schedule-card-title" data-i18n="schBusanOnlineTitle">Komsel Daerah Busan (Online)</h3>
+            <div class="schedule-card-time">
+              <span>🕒</span> <span data-i18n="schBusanOnlineTime">Setiap Kamis, 21:00 KST</span>
+            </div>
+            <p class="schedule-card-desc" data-i18n="schBusanOnlineDesc">Persekutuan komsel daerah Busan yang diadakan secara online, saling menguatkan dan berbagi firman Tuhan.</p>
+          </article>
+
+          <!-- Bible Study -->
+          <article class="schedule-card featured">
+            <span class="card-top-tag" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.4);" data-i18n="schBibleTag">Bible Study</span>
+            <div class="schedule-card-icon">✝️</div>
+            <h3 class="schedule-card-title" data-i18n="schBibleTitle">Bible Study</h3>
+            <div class="schedule-card-time">
+              <span>🕒</span> <span data-i18n="schBibleTime">Setiap Sabtu, 18:00 – 21:00 KST</span>
+            </div>
+            <p class="schedule-card-desc" data-i18n="schBibleDesc">Pendalaman Alkitab di gereja untuk memperlengkapi setiap jemaat memahami kebenaran firman secara mendalam.</p>
+          </article>
+
+          <!-- Sports Day -->
+          <article class="schedule-card">
+            <span class="card-top-tag" style="background: rgba(245, 158, 11, 0.2); color: #fcd34d; border-color: rgba(245, 158, 11, 0.4);" data-i18n="schSportsTag">Sports Day</span>
+            <div class="schedule-card-icon">⚽</div>
+            <h3 class="schedule-card-title" data-i18n="schSportsTitle">Sports Day</h3>
+            <div class="schedule-card-time">
+              <span>🕒</span> <span data-i18n="schSportsTime">Setiap Sabtu, 10:00 – 12:00 KST</span>
+            </div>
+            <p class="schedule-card-desc" data-i18n="schSportsDesc">Kebersamaan olahraga akhir pekan untuk menjaga kesehatan dan mempererat persaudaraan jemaat.</p>
+          </article>
+        </div>
+
+        <!-- Scripture Highlight Card (1 Timothy 1:12 from Sketchup) -->
+        <div class="scripture-card">
+          <div class="scripture-verse-ref" data-i18n="scriptureRef">1 Timotius 1:12 (1 TIMOTHY 1:12)</div>
+          <p class="scripture-text" data-i18n="scriptureText">
+            “Aku bersyukur kepada Dia, yang menguatkan aku, yaitu Kristus Yesus, Tuhan kita, karena Ia menganggap aku setia dan mempercayakan pelayanan ini kepadaku.”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         Section: Online Service (YouTube Live Stream Referral)
+         ========================================================== -->
+    <section class="section" id="online-service" style="background: rgba(4, 9, 18, 0.4);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="sectionOnline">IBADAH ONLINE</span>
+          <h2 class="section-title" data-i18n="onlineTitle">Ibadah Online & Live Streaming</h2>
+          <p class="section-subtitle" data-i18n="onlineSubtitle">Ikuti siaran langsung Ibadah Raya Minggu serta arsip khotbah firman Tuhan melalui kanal resmi YouTube SIS Indonesia.</p>
+        </div>
+
+        <div class="youtube-stream-card">
+          <div class="youtube-card-left">
+            <div class="youtube-badge">
+              <span class="live-pulse" style="width: 8px; height: 8px;" aria-hidden="true"></span>
+              <span data-i18n="youtubeBadge">Live Streaming YouTube Resmi</span>
+            </div>
+            <h3 class="youtube-channel-title">Sis Indonesia</h3>
+            <span class="youtube-channel-handle">@sisindonesia1611</span>
+            <p class="youtube-stream-desc" data-i18n-html="youtubeDesc">
+              Ibadah Raya Minggu disiarkan secara langsung (Live Streaming) setiap hari Minggu pukul <strong>12:00 – 14:00 KST</strong> (Waktu Korea). Bagi jemaat, sahabat, dan keluarga yang berhalangan hadir di lokasi, Anda dapat bergabung dalam ibadah dan pujian secara daring.
+            </p>
+            <div class="youtube-actions">
+              <a href="https://www.youtube.com/@sisindonesia1611/streams"
+                 target="_blank"
+                 rel="noopener"
+                 class="btn btn-youtube-live">
+                <span>🔴</span> <span data-i18n="btnOpenYoutube">Buka YouTube Live Streams ↗</span>
+              </a>
+              <a href="https://www.youtube.com/@sisindonesia1611"
+                 target="_blank"
+                 rel="noopener"
+                 class="btn btn-secondary">
+                <span>📺</span> <span data-i18n="btnVisitChannel">Kunjungi Halaman Channel</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="youtube-card-right">
+            <a href="https://www.youtube.com/@sisindonesia1611/streams" target="_blank" rel="noopener" aria-label="Buka kanal YouTube Sis Indonesia">
+              <div class="youtube-play-icon-box" title="Klik untuk membuka YouTube Streams">
+                ▶
+              </div>
+            </a>
+            <span style="margin-top: 1rem; font-size: 0.85rem; color: #fca5a5; font-weight: 700;">@sisindonesia1611/streams</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         Section: Church Activities & Fellowship Community
+         ========================================================== -->
+    <section class="section" id="activities">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="sectionActivities">KEHIDUPAN GEREJA</span>
+          <h2 class="section-title" data-i18n="activitiesTitle">Aktivitas & Kehidupan Gereja</h2>
+          <p class="section-subtitle" data-i18n="activitiesSubtitle">Gereja SIS bukan sekadar tempat beribadah, melainkan rumah kedua bagi kita di perantauan.</p>
+        </div>
+
+        <div class="activities-grid">
+          <div class="activity-card">
+            <div class="activity-icon-bubble">🎓</div>
+            <h3 class="activity-title" data-i18n="actStudentsTitle">Mahasiswa & Pelajar</h3>
+            <p class="activity-desc" data-i18n="actStudentsDesc">Komunitas mahasiswa S1, S2, dan bahasa di berbagai universitas Busan (Pusan National Univ, Kyungsung, Pukyong, Tongmyong, dll).</p>
+          </div>
+
+          <div class="activity-card">
+            <div class="activity-icon-bubble">💼</div>
+            <h3 class="activity-title" data-i18n="actWorkersTitle">Pekerja & Profesional</h3>
+            <p class="activity-desc" data-i18n="actWorkersDesc">Dukungan rohani dan kekeluargaan erat bagi rekan-rekan pekerja migran Indonesia yang berkarya di kawasan Busan & Gyeongnam.</p>
+          </div>
+
+          <div class="activity-card">
+            <div class="activity-icon-bubble">🏕️</div>
+            <h3 class="activity-title" data-i18n="actRetreatTitle">Retreat & Outing</h3>
+            <p class="activity-desc" data-i18n="actRetreatDesc">Kegiatan rekreasi tahunan, retreat pembaharuan rohani, piknik musim semi, dan jelajah keindahan kota pelabuhan Busan.</p>
+          </div>
+
+          <div class="activity-card">
+            <div class="activity-icon-bubble">🎉</div>
+            <h3 class="activity-title" data-i18n="actNewcomersTitle">Welcoming Newcomers</h3>
+            <p class="activity-desc" data-i18n="actNewcomersDesc">Baru pertama kali tiba di Busan? Kami siap menyambut Anda dengan hangat, membantu adaptasi dan kehidupan di Korea Selatan.</p>
+          </div>
+        </div>
+
+        <!-- Upcoming Activities (Retreat, Natal, Hangout, dll) -->
+        <div class="upcoming-activities">
+          <h3 class="upcoming-activities-title"><span aria-hidden="true">📅</span> <span data-i18n="upcomingTitle">Kegiatan Mendatang</span></h3>
+          <div class="upcoming-activities-grid">
+            <!--
+              Template kartu upcoming activity — salin blok di bawah ini untuk setiap acara baru
+              (contoh: Retreat, Perayaan Natal, Hangout, dll), lalu hapus komentar & elemen "empty state".
+              Untuk mendukung 3 bahasa, gunakan data-i18n-id / data-i18n-en / data-i18n-kr pada judul & deskripsi,
+              lalu isi ketiganya di JS (lihat fungsi applyLanguage di main.js).
+
+              <article class="upcoming-activity-card">
+                <span class="upcoming-activity-date">DD MMM YYYY</span>
+                <h4 class="upcoming-activity-name">Nama Acara</h4>
+                <p class="upcoming-activity-desc">Deskripsi singkat acara.</p>
+              </article>
+            -->
+            <div class="upcoming-activities-empty">
+              <span class="upcoming-activities-empty-icon">🗓️</span>
+              <p data-i18n="upcomingEmpty">Belum ada kegiatan mendatang saat ini. Nantikan info Retreat, Natal, Hangout, dan acara lainnya di sini.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         Section: Find Us & Directions (Location)
+         ========================================================== -->
+    <section class="section location-section" id="find-us">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="sectionFind">LOKASI KAMI</span>
+          <h2 class="section-title" data-i18n="findTitle">Lokasi & Petunjuk Arah</h2>
+          <p class="section-subtitle" data-i18n="findSubtitle">Gedung sangat mudah diakses dengan transportasi umum Subway Busan.</p>
+        </div>
+
+        <div class="location-layout">
+          <!-- Information & Step-by-Step Card -->
+          <div class="location-info-card">
+            <!-- Subway Direction Highlight -->
+            <div class="direction-highlight">
+              <span class="direction-badge-icon">🚇</span>
+              <div>
+                <div class="direction-text-main" data-i18n="bexcoDir">Bexco Station (벡스코역) Exit 1</div>
+                <div class="direction-text-sub" data-i18n="bexcoDist">Keluar dari Pintu 1, Jalan Lurus 80 Meter (1–2 menit jalan kaki)</div>
+              </div>
+            </div>
+
+            <!-- Address Block -->
+            <div class="address-block">
+              <div class="address-label" data-i18n="addressLabelKorean">Alamat Bahasa Korea (Untuk Navigasi / Taksi)</div>
+              <div class="address-korean">
+                <span>부산광역시 해운대구 해운대로 402 수영로교회 비전센터 2층</span>
+                <button class="copy-btn copy-address-btn" title="Salin Alamat">
+                  📋 <span data-i18n="copyBtn">Salin Alamat</span>
+                </button>
+              </div>
+              <div class="address-english">
+                2F, Sooyoungro Church Vision Center, 402 Haeun-daero, Haeundae-gu, Busan, South Korea
+              </div>
+            </div>
+
+            <!-- Direct Map Actions -->
+            <div class="address-block">
+              <div class="address-label" data-i18n="openMapLabel">Buka di Aplikasi Peta:</div>
+              <div class="map-actions">
+                <a href="https://map.naver.com/p/search/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%EB%A1%9C%20402"
+                   target="_blank" rel="noopener" class="map-btn map-btn-naver">
+                  🟢 <span data-i18n="mapNaver">Buka di Naver Map</span>
+                </a>
+                <a href="https://map.kakao.com/?q=%EB%B6%80%EC%82%B0%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%ED%95%B4%EC%9A%B4%EB%8C%80%EB%A1%9C%20402"
+                   target="_blank" rel="noopener" class="map-btn map-btn-kakao">
+                  🟡 <span data-i18n="mapKakao">Buka di KakaoMap</span>
+                </a>
+                <a href="https://maps.google.com/?q=Sooyoungro+Presbyterian+Church+Vision+Center+Busan"
+                   target="_blank" rel="noopener" class="map-btn map-btn-google">
+                  🔵 <span data-i18n="mapGoogle">Buka di Google Maps</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Contact Channels -->
+            <div class="address-block" style="border-top: 1px solid var(--border-glass); padding-top: 1rem;">
+              <div class="address-label" data-i18n="contactLabel">Kontak Resmi:</div>
+              <div class="contact-info-list">
+                <div class="contact-info-item"><i class="fa-solid fa-envelope" aria-hidden="true"></i> <strong data-i18n="labelEmail">Email:</strong> <a href="mailto:infogerejasis@gmail.com">infogerejasis@gmail.com</a></div>
+                <div class="contact-info-item"><i class="fa-brands fa-instagram" aria-hidden="true"></i> <strong data-i18n="labelInstagram">Instagram:</strong> <a href="https://instagram.com/Gerejasis_official" target="_blank" rel="noopener">@Gerejasis_official</a></div>
+                <div class="contact-info-item"><i class="fa-brands fa-tiktok" aria-hidden="true"></i> <strong data-i18n="labelTiktok">TikTok:</strong> <a href="https://www.tiktok.com/@gerejasis_official" target="_blank" rel="noopener">@Gerejasis_official</a></div>
+                <div class="contact-info-item"><i class="fa-brands fa-youtube" aria-hidden="true"></i> <strong data-i18n="labelYoutube">YouTube:</strong> <a href="https://www.youtube.com/@sisindonesia1611" target="_blank" rel="noopener">Sis Indonesia</a></div>
+                <div class="contact-info-item"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i> <strong data-i18n="labelFacebook">Facebook:</strong> <a href="https://www.facebook.com" target="_blank" rel="noopener">Sooyoungro Indonesian Service</a></div>
+                <div class="contact-info-item"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> <strong data-i18n="labelWhatsapp">WhatsApp:</strong> <a href="https://wa.me/821057960961" target="_blank" rel="noopener">010-5796-0961</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Building Exterior Photo Card with 2nd Floor Badge -->
+          <div class="building-visual-card">
+            <div class="building-img-wrap">
+              <img src="./assets/images/building-exterior.png" alt="Gedung Suwon/Sooyoungro Vision Center Lantai 2" loading="lazy">
+              <span class="floor-callout-badge" data-i18n="floorBadge">Lantai 2 (2nd Floor)</span>
+            </div>
+            <div class="building-caption">
+              <strong>수영로교회 비전센터 (Vision Center)</strong>
+              <span data-i18n="buildingCaption">Pintu masuk utama gedung terlihat jelas setelah berjalan lurus 80m dari Exit 1 Stasiun Bexco. Naik ke Lantai 2 untuk ruangan ibadah SIS.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Map Preview -->
+        <div class="interactive-map-card">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3261.2721869857993!2d129.13540867625843!3d35.16854197275769!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356892e6244f77c3%3A0x869b2d291e0a2979!2sSooyoungro%20Presbyterian%20Church!5e0!3m2!1sen!2skr!4v1700000000000!5m2!1sen!2skr" 
+            title="Peta Lokasi Sooyoungro Indonesia Service Busan"
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================
+       Footer
+       ========================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: About SIS -->
+        <div>
+          <div class="church-brand" style="margin-bottom: 1rem;">
+            <img src="./assets/images/logo.png" alt="Logo Sooyoungro" style="height: 38px;">
+            <div class="brand-texts">
+              <span class="brand-name" style="font-size: 1rem;">SIS BUSAN</span>
+              <span class="brand-badge" style="font-size: 0.68rem;">GEREJA INDONESIA DI BUSAN</span>
+            </div>
+          </div>
+          <p class="footer-desc" data-i18n="footerDesc">
+            Pelayanan ibadah dan persekutuan masyarakat Indonesia di Busan di bawah naungan Gereja Presbiterian Sooyoungro (대한예수교장로회 수영로교회).
+          </p>
+          <div class="social-links-row">
+            <a href="https://instagram.com/Gerejasis_official" target="_blank" rel="noopener" class="social-icon-btn instagram" title="Instagram @Gerejasis_official" aria-label="Instagram">
+              <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.tiktok.com/@gerejasis_official" target="_blank" rel="noopener" class="social-icon-btn tiktok" title="TikTok @Gerejasis_official" aria-label="TikTok">
+              <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.youtube.com/@sisindonesia1611/streams" target="_blank" rel="noopener" class="social-icon-btn youtube" title="YouTube Sis Indonesia" aria-label="YouTube">
+              <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener" class="social-icon-btn facebook" title="Facebook Sooyoungro Indonesian Service" aria-label="Facebook">
+              <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+            </a>
+            <a href="https://wa.me/821057960961" target="_blank" rel="noopener" class="social-icon-btn whatsapp" title="WhatsApp 010-5796-0961" aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <h4 class="footer-col-title" data-i18n="footerNavTitle">Navigasi</h4>
+          <ul class="footer-links-list">
+            <li><a href="#home" class="footer-link" data-i18n="footerHome">Beranda (Home)</a></li>
+            <li><a href="#visit-us" class="footer-link" data-i18n="footerVisit">Jadwal Ibadah (Visit Us)</a></li>
+            <li><a href="https://www.youtube.com/@sisindonesia1611/streams" target="_blank" rel="noopener" class="footer-link" data-i18n="footerOnline">Ibadah Online (Online Service) ↗</a></li>
+            <li><a href="#activities" class="footer-link" data-i18n="footerActivities">Aktivitas Komunitas (Activities)</a></li>
+            <li><a href="#find-us" class="footer-link" data-i18n="footerFind">Lokasi & Arah (Find Us)</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Church Address Info -->
+        <div>
+          <h4 class="footer-col-title" data-i18n="footerContactTitle">Alamat & Kontak</h4>
+          <div class="footer-contact-item">
+            <span>📍</span>
+            <span>수영로교회 비전센터 2층<br>부산 해운대구 해운대로 402</span>
+          </div>
+          <div class="footer-contact-item">
+            <span>🚇</span>
+            <span data-i18n="footerBexco">Bexco Station Exit 1 (Walk 80m)</span>
+          </div>
+          <div class="footer-contact-item">
+            <span>✉️</span>
+            <span><a href="mailto:infogerejasis@gmail.com" style="color: inherit;">infogerejasis@gmail.com</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+            <span><a href="https://wa.me/821057960961" target="_blank" rel="noopener" style="color: inherit;">010-5796-0961</a></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p data-i18n="footerCopyright">© 2026 Sooyoungro Indonesia Service (SIS). Seluruh Hak Cipta Dilindungi. Berafiliasi dengan Gereja Presbiterian Sooyoungro, Busan, Korea Selatan.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Mobile Quick Action Bar -->
+  <nav class="floating-action-bar" aria-label="Aksi Cepat Mobile">
+    <a href="#find-us" class="floating-btn">
+      <span>📍</span>
+      <span data-i18n="floatLocation">Lokasi</span>
+    </a>
+    <a href="#visit-us" class="floating-btn">
+      <span>📅</span>
+      <span data-i18n="floatSchedule">Jadwal</span>
+    </a>
+    <a href="https://www.youtube.com/@sisindonesia1611/streams" target="_blank" rel="noopener" class="floating-btn">
+      <span>🔴</span>
+      <span data-i18n="floatLive">Live</span>
+    </a>
+    <button class="floating-btn copy-address-btn" style="background: none; border: none; cursor: pointer;">
+      <span>📋</span>
+      <span data-i18n="copyBtn">Salin Alamat</span>
+    </button>
+  </nav>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-msg" id="toast" role="status" aria-live="polite" data-i18n="toastDefault">✓ Alamat berhasil disalin!</div>
+
+  <!-- Main JavaScript File -->
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>
