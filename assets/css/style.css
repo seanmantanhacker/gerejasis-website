@@ -386,17 +386,25 @@ img {
   aspect-ratio: 999 / 545;
 }
 
+/*
+  Slide aktif fade-in di ATAS slide lama (z-index 2). Slide lama tetap opacity 1
+  selama transisi lalu baru disembunyikan, supaya pergantian foto tidak berkedip
+  hitam di tengah crossfade.
+*/
 .hero-slide {
   position: absolute;
   inset: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.8s ease;
+  z-index: 1;
+  transition: opacity 0s linear 0.8s, visibility 0s linear 0.8s;
 }
 
 .hero-slide.active {
   opacity: 1;
   visibility: visible;
+  z-index: 2;
+  transition: opacity 0.8s ease, visibility 0s;
 }
 
 .hero-slide img {

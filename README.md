@@ -68,8 +68,8 @@ gerejasis-website/
 │   │   └── main.js         # Countdown timer, hero slideshow, copy address, language switcher, particles
 │   └── images/
 │       ├── logo.png              # Logo resmi gereja Sooyoungro (dipakai di header, favicon, footer)
-│       ├── hero-congregation.png # Foto jemaat SIS (slide 1 hero slideshow)
-│       ├── building-exterior.png # Foto gedung Vision Center lantai 2 (section Find Us)
+│       ├── hero-congregation.jpg # Foto jemaat SIS (slide 1 hero slideshow)
+│       ├── building-exterior.jpg # Foto gedung Vision Center lantai 2 (section Find Us)
 │       ├── follow-badge.png      # Aset cadangan, belum dipakai di halaman
 │       ├── logo-emblem.png       # Aset cadangan, belum dipakai di halaman
 │       ├── logo-transparent.png  # Aset cadangan, belum dipakai di halaman

@@ -197,7 +197,10 @@ function initNavScroll() {
 }
 
 /* ==========================================================
-   3b. Hero Photo Slideshow (dummy/template slides until real photos are added)
+   3b. Hero Photo Slideshow
+   Slide pertama sudah punya src di HTML; sisanya memakai data-src dan baru
+   di-fetch di sini (slide aktif + slide berikutnya) agar foto pertama muncul
+   cepat saat halaman pertama kali dibuka.
    ========================================================== */
 function initHeroSlideshow() {
   const slideshow = document.getElementById('hero-slideshow');
@@ -213,8 +216,18 @@ function initHeroSlideshow() {
   let current = 0;
   let timer = null;
 
+  /* Pasang src sebenarnya dari data-src, sekali saja per slide */
+  function loadSlide(index) {
+    const img = slides[(index + slides.length) % slides.length].querySelector('img[data-src]');
+    if (!img) return;
+    img.src = img.getAttribute('data-src');
+    img.removeAttribute('data-src');
+  }
+
   function goTo(index) {
     current = (index + slides.length) % slides.length;
+    loadSlide(current);
+    loadSlide(current + 1);
     slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
     dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
   }
@@ -239,6 +252,15 @@ function initHeroSlideshow() {
 
   slideshow.addEventListener('mouseenter', stopAutoplay);
   slideshow.addEventListener('mouseleave', startAutoplay);
+
+  /* Baru siapkan slide ke-2 setelah foto pertama selesai, supaya tidak rebutan bandwidth */
+  const firstImg = slides[0].querySelector('img');
+  if (!firstImg || firstImg.complete) {
+    loadSlide(1);
+  } else {
+    firstImg.addEventListener('load', () => loadSlide(1), { once: true });
+    firstImg.addEventListener('error', () => loadSlide(1), { once: true });
+  }
 
   startAutoplay();
 }

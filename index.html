@@ -13,7 +13,7 @@
   <!-- Open Graph / Social Sharing -->
   <meta property="og:title" content="SIS - Sooyoungro Indonesia Service | Gereja Indonesia di Busan">
   <meta property="og:description" content="Komunitas & Ibadah Indonesia di Busan, Korea Selatan. Bergabunglah bersama keluarga di perantauan! Our Church, Your Home.">
-  <meta property="og:image" content="./assets/images/hero-congregation.png">
+  <meta property="og:image" content="./assets/images/hero-congregation.jpg">
   <meta property="og:type" content="website">
 
   <!-- Favicon -->
@@ -103,32 +103,37 @@
         <!-- Featured Congregation Photo Slideshow -->
         <div class="hero-photo-wrapper">
           <div class="hero-slideshow" id="hero-slideshow">
+            <!--
+              Slide pertama dimuat langsung (LCP). Slide berikutnya memakai data-src dan
+              baru di-fetch oleh initHeroSlideshow() saat gilirannya tiba, supaya foto
+              pertama tidak berebut bandwidth dengan 8 foto lain saat halaman dibuka.
+            -->
             <div class="hero-slide active">
-              <img src="./assets/images/hero-congregation.png" alt="Keluarga Besar Sooyoungro Indonesia Service Busan" loading="eager">
+              <img src="./assets/images/hero-congregation.jpg" alt="Keluarga Besar Sooyoungro Indonesia Service Busan" loading="eager" fetchpriority="high" decoding="async">
             </div>
             <div class="hero-slide">
-              <img src="./assets/images/home/sunday-service-hall.jpg" alt="Jemaat SIS mengikuti ibadah di Vision Center 수영로교회" loading="lazy">
+              <img data-src="./assets/images/home/sunday-service-hall.jpg" alt="Jemaat SIS mengikuti ibadah di Vision Center 수영로교회" decoding="async">
             </div>
             <div class="hero-slide">
-              <img src="./assets/images/home/christmas-natal-2025.jpg" alt="Perayaan Natal Bersama PGIK" loading="lazy">
+              <img data-src="./assets/images/home/christmas-natal-2025.jpg" alt="Perayaan Natal Bersama PGIK" decoding="async">
             </div>
             <div class="hero-slide">
-              <img src="./assets/images/home/year-end-gathering.jpg" alt="Malam pergantian tahun bersama jemaat" loading="lazy">
+              <img data-src="./assets/images/home/year-end-gathering.jpg" alt="Malam pergantian tahun bersama jemaat" decoding="async">
             </div>
             <div class="hero-slide">
-              <img src="./assets/images/home/community-gathering.jpg" alt="Kebersamaan komunitas SIS" loading="lazy">
+              <img data-src="./assets/images/home/community-gathering.jpg" alt="Kebersamaan komunitas SIS" decoding="async">
             </div>
             <div class="hero-slide">
-              <img src="./assets/images/home/birthday-celebration.jpg" alt="Perayaan ulang tahun jemaat SIS" loading="lazy">
+              <img data-src="./assets/images/home/birthday-celebration.jpg" alt="Perayaan ulang tahun jemaat SIS" decoding="async">
             </div>
             <div class="hero-slide">
-              <img src="./assets/images/home/outdoor-retreat.jpg" alt="Retreat jemaat SIS di alam terbuka" loading="lazy">
+              <img data-src="./assets/images/home/outdoor-retreat.jpg" alt="Retreat jemaat SIS di alam terbuka" decoding="async">
             </div>
             <div class="hero-slide">
-              <img src="./assets/images/home/autumn-picnic.jpg" alt="Piknik musim gugur bersama jemaat SIS" loading="lazy">
+              <img data-src="./assets/images/home/autumn-picnic.jpg" alt="Piknik musim gugur bersama jemaat SIS" decoding="async">
             </div>
             <div class="hero-slide">
-              <img src="./assets/images/home/fellowship-table.jpg" alt="Ramah tamah dan persekutuan jemaat SIS seusai ibadah" loading="lazy">
+              <img data-src="./assets/images/home/fellowship-table.jpg" alt="Ramah tamah dan persekutuan jemaat SIS seusai ibadah" decoding="async">
             </div>
 
             <button class="slide-nav prev" type="button" aria-label="Foto sebelumnya">‹</button>
@@ -463,7 +468,7 @@
           <!-- Building Exterior Photo Card with 2nd Floor Badge -->
           <div class="building-visual-card">
             <div class="building-img-wrap">
-              <img src="./assets/images/building-exterior.png" alt="Gedung Suwon/Sooyoungro Vision Center Lantai 2" loading="lazy">
+              <img src="./assets/images/building-exterior.jpg" alt="Gedung Suwon/Sooyoungro Vision Center Lantai 2" loading="lazy">
               <span class="floor-callout-badge" data-i18n="floorBadge">Lantai 2 (2nd Floor)</span>
             </div>
             <div class="building-caption">
