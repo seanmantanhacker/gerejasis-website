@@ -7,12 +7,12 @@ Official website for **Sooyoungro Indonesia Service (SIS)** — Indonesian Chris
 ## 🌟 Key Features
 
 - **Branded Design & Header**: Official church emblem, motto (*"Our Church, Your Home"*), and bilingual identification (*Gereja Indonesia di Busan*).
-- **Hero Photo Slideshow**: Rotating congregation photo slideshow (auto-advance, prev/next & dot navigation) with theme scripture (*Mazmur 119:105*) — 8 real photos from church gatherings, Christmas, birthdays, and retreats.
+- **Hero Photo Slideshow**: Rotating congregation photo slideshow (auto-advance, prev/next & dot navigation) with theme scripture (*Mazmur 119:105*) — 9 real photos from Sunday services, church gatherings, Christmas, birthdays, and retreats.
 - **Live Sunday Countdown**: Real-time interactive countdown timer calculating the time remaining until next Sunday's 12:00 PM KST service, with a live "sedang berlangsung" state during the service.
 - **Weekly Fellowship & Worship Schedule**:
   - Sunday Service: 12:00 – 14:00 KST (Lantai 2 Vision Center)
   - Komsel Daerah Kyungsung: setiap Rabu, 19:00 – 21:00 KST
-  - Komsel Daerah Busan (Online): setiap Kamis, 21:00 KST
+  - Komsel Daerah Busan University (Online): setiap Kamis, 21:00 KST
   - Bible Study: setiap Sabtu, 18:00 – 21:00 KST
   - Sports Day: setiap Sabtu, 10:00 – 12:00 KST
   - Scripture Inspiration: 1 Timotius 1:12
@@ -76,14 +76,15 @@ gerejasis-website/
 │       ├── map-preview.png       # Aset cadangan, belum dipakai di halaman
 │       ├── video-thumb-1.png     # Aset cadangan, belum dipakai di halaman
 │       ├── video-thumb-2.png     # Aset cadangan, belum dipakai di halaman
-│       └── home/                 # Foto slide 2–8 hero slideshow (sudah dikompres, EXIF di-strip)
-│           ├── gathering-indoor.jpg
+│       └── home/                 # Foto slide 2–9 hero slideshow (sudah dikompres, EXIF di-strip)
+│           ├── sunday-service-hall.jpg
 │           ├── christmas-natal-2025.jpg
 │           ├── year-end-gathering.jpg
 │           ├── community-gathering.jpg
 │           ├── birthday-celebration.jpg
 │           ├── outdoor-retreat.jpg
-│           └── autumn-picnic.jpg
+│           ├── autumn-picnic.jpg
+│           └── fellowship-table.jpg
 └── README.md
 ```
 
