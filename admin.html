@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIS Admin Dashboard | Kelola Poster Ibadah Mingguan</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./assets/images/logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer">
+
+  <style>
+    :root {
+      --bg-dark: #070e1c;
+      --bg-surface: rgba(13, 27, 51, 0.85);
+      --bg-card: rgba(16, 33, 64, 0.7);
+      --border-glass: rgba(255, 255, 255, 0.1);
+      --border-glow: rgba(56, 189, 248, 0.4);
+      --primary-blue: #0284c7;
+      --primary-light: #38bdf8;
+      --accent-gold: #f59e0b;
+      --accent-gold-light: #fde68a;
+      --accent-rose: #f43f5e;
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      background: radial-gradient(circle at 15% 15%, rgba(14, 116, 144, 0.2) 0%, transparent 45%),
+                  radial-gradient(circle at 85% 25%, rgba(2, 132, 199, 0.15) 0%, transparent 50%),
+                  var(--bg-dark);
+    }
+
+    .admin-header {
+      backdrop-filter: blur(16px);
+      background: rgba(4, 9, 18, 0.9);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 1rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-logo {
+      height: 38px;
+      width: auto;
+      border-radius: var(--radius-sm);
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .badge-admin {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--accent-gold-light);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--radius-full);
+      margin-left: 0.4rem;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.04);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .btn-outline:hover {
+      color: #ffffff;
+      border-color: var(--primary-light);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    /* Main Container */
+    .admin-main {
+      max-width: 1200px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* Panel Card */
+    .panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .panel-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary-light);
+      margin-bottom: 0.45rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      background: rgba(7, 14, 28, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.92rem;
+      transition: all var(--transition-fast);
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .form-textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .input-addon-btn {
+      position: absolute;
+      right: 6px;
+      top: 6px;
+      bottom: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fd1d1d 0%, #e1306c 50%, #833ab4 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity var(--transition-fast);
+    }
+
+    .input-addon-btn:hover {
+      opacity: 0.9;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Submit Button */
+    .btn-save {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.9rem 1.5rem;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 800;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.5);
+      margin-top: 0.5rem;
+    }
+
+    .btn-save:hover {
+      background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+      box-shadow: 0 12px 30px -4px rgba(56, 189, 248, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-save:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Live Preview Section */
+    .preview-sticky {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .preview-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* Preview Card (Exact Clone of Main Site) */
+    .weekly-poster-card {
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(145deg, rgba(16, 33, 64, 0.95) 0%, rgba(10, 20, 42, 0.95) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.7);
+    }
+
+    .poster-image-frame {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, rgba(14, 116, 144, 0.2) 0%, rgba(6, 13, 26, 0.9) 100%);
+      overflow: hidden;
+    }
+
+    .poster-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .poster-overlay-badge {
+      position: absolute;
+      bottom: 0.85rem;
+      left: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.75rem;
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .weekly-poster-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .poster-badge {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent-gold-light);
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      padding: 0.2rem 0.65rem;
+      border-radius: var(--radius-full);
+    }
+
+    .poster-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .poster-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .poster-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .poster-btn-fake {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, #fd1d1d 0%, #e1306c 50%, #833ab4 100%);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+      width: fit-content;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: rgba(16, 185, 129, 0.95);
+      color: #ffffff;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateY(120%);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Password Modal Gate */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 9, 18, 0.92);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 1.5rem;
+    }
+
+    .modal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-glow);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-icon {
+      font-size: 2.5rem;
+      color: var(--primary-light);
+      margin-bottom: 1rem;
+    }
+
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-input {
+      width: 100%;
+      background: rgba(7, 14, 28, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      color: #ffffff;
+      font-size: 1rem;
+      text-align: center;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+    }
+
+    .modal-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--primary-blue);
+      border: none;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+
+    .modal-btn:hover {
+      background: #0284c7;
+    }
+
+    .modal-error {
+      color: var(--accent-rose);
+      font-size: 0.82rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .preview-sticky {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Password Authentication Gate -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal-card">
+      <div class="modal-icon">🔐</div>
+      <h2 class="modal-title">Admin Dashboard SIS</h2>
+      <p class="modal-desc">Masukkan password admin untuk mengelola poster & warta ibadah mingguan.</p>
+      
+      <form id="auth-form" onsubmit="handleLogin(event)">
+        <input type="password" id="auth-password" class="modal-input" placeholder="Masukkan Password" autocomplete="current-password" required>
+        <button type="submit" class="modal-btn">Masuk ke Dashboard</button>
+        <div class="modal-error" id="auth-error">Password salah. Silakan coba lagi.</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Header -->
+  <header class="admin-header">
+    <div class="header-container">
+      <div class="brand-group">
+        <img src="./assets/images/logo.png" alt="SIS Logo" class="brand-logo">
+        <div class="brand-title">
+          SIS BUSAN <span class="badge-admin">Admin</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="./index.html" target="_blank" class="btn-outline">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Website
+        </a>
+        <button onclick="handleLogout()" class="btn-outline" title="Keluar">
+          <i class="fa-solid fa-right-from-bracket"></i> Keluar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <div class="dashboard-grid">
+      
+      <!-- Left Column: Form Controls -->
+      <section class="panel">
+        <h1 class="panel-title">
+          <i class="fa-solid fa-pen-to-square" style="color: var(--primary-light);"></i>
+          Update Ibadah Minggu Ini
+        </h1>
+        <p class="panel-desc">
+          Cukup tempelkan link postingan Instagram dan sesuaikan teks jika diperlukan. Perubahan akan <strong>langsung aktif di website utama secara real-time</strong> tanpa perlu git commit.
+        </p>
+
+        <form id="poster-form" onsubmit="handleSave(event)">
+          <!-- Instagram URL -->
+          <div class="form-group">
+            <label class="form-label" for="input-ig-url">1. Link Postingan Instagram</label>
+            <div class="input-wrapper">
+              <input type="url" 
+                     id="input-ig-url" 
+                     class="form-input" 
+                     placeholder="https://www.instagram.com/p/..." 
+                     required
+                     oninput="handleInputChange()">
+              <button type="button" class="input-addon-btn" onclick="fetchInstagramData()" id="btn-fetch">
+                <i class="fa-brands fa-instagram"></i> Ambil Info
+              </button>
+            </div>
+            <small style="font-size: 0.76rem; color: var(--text-dim); display: block; margin-top: 0.35rem;">
+              Contoh: <code>https://www.instagram.com/p/DclUqbjE42Y/</code>
+            </small>
+          </div>
+
+          <!-- Image URL -->
+          <div class="form-group">
+            <label class="form-label" for="input-img-url">2. URL Gambar Poster (Resolusi Penuh)</label>
+            <input type="url" 
+                   id="input-img-url" 
+                   class="form-input" 
+                   placeholder="https://...jpg" 
+                   required
+                   oninput="handleInputChange()">
+          </div>
+
+          <!-- Sermon Theme -->
+          <div class="form-group">
+            <label class="form-label" for="input-theme">3. Tema Khotbah</label>
+            <input type="text" 
+                   id="input-theme" 
+                   class="form-input" 
+                   placeholder="“Berkat Bagi Mereka Yang Murni Hatinya”" 
+                   required
+                   oninput="handleInputChange()">
+          </div>
+
+          <!-- Speaker -->
+          <div class="form-group">
+            <label class="form-label" for="input-speaker">4. Pembicara / Pengkhotbah</label>
+            <input type="text" 
+                   id="input-speaker" 
+                   class="form-input" 
+                   placeholder="Pembicara: Pdt. Misnan Nanang" 
+                   required
+                   oninput="handleInputChange()">
+          </div>
+
+          <!-- Schedule & Location -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="input-schedule">5. Hari & Jam</label>
+              <input type="text" 
+                     id="input-schedule" 
+                     class="form-input" 
+                     value="Setiap Minggu, 12:00 – 14:00 KST"
+                     required
+                     oninput="handleInputChange()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-location">6. Lokasi Ibadah</label>
+              <input type="text" 
+                     id="input-location" 
+                     class="form-input" 
+                     value="Vision Center Lt. 2 (Bexco Exit 1)"
+                     required
+                     oninput="handleInputChange()">
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label class="form-label" for="input-desc">7. Deskripsi / Keterangan Warta</label>
+            <textarea id="input-desc" 
+                      class="form-textarea" 
+                      placeholder="Hadirilah kebaktian umum minggu ini bersama keluarga besar SIS di Busan..."
+                      oninput="handleInputChange()"></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-save" id="btn-save">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>Simpan & Tampilkan di Website Langsung</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Right Column: Live Preview -->
+      <section class="preview-sticky">
+        <div class="preview-header">
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+            Live Preview Kartu Website
+          </div>
+          <div class="preview-badge">
+            <i class="fa-solid fa-circle" style="font-size: 0.45rem;"></i> Real-time Preview
+          </div>
+        </div>
+
+        <div class="weekly-poster-card">
+          <div class="poster-image-frame">
+            <img src="./assets/images/logo.png" 
+                 alt="Preview Poster" 
+                 id="preview-img" 
+                 class="poster-img"
+                 referrerpolicy="no-referrer">
+            <div class="poster-overlay-badge">
+              <i class="fa-brands fa-instagram"></i>
+              <span>@gerejasis_official</span>
+            </div>
+          </div>
+
+          <div class="weekly-poster-content">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="poster-badge">Tema Pekan Ini</span>
+              <span style="font-size: 0.75rem; color: #f43f5e; font-weight: 600;">
+                <i class="fa-brands fa-instagram"></i> Instagram Post
+              </span>
+            </div>
+
+            <h2 class="poster-title" id="preview-title">“Tema Khotbah Akan Muncul di Sini”</h2>
+
+            <div style="display: flex; flex-direction: column; gap: 0.4rem; margin: 0.3rem 0;">
+              <div class="poster-meta-item">
+                <span>🎙️</span>
+                <span id="preview-speaker">Pembicara: Pdt. Nama Pembicara</span>
+              </div>
+              <div class="poster-meta-item">
+                <span>🕒</span>
+                <span id="preview-schedule">Setiap Minggu, 12:00 – 14:00 KST</span>
+              </div>
+              <div class="poster-meta-item">
+                <span>📍</span>
+                <span id="preview-location">Vision Center Lt. 2 (Bexco Exit 1)</span>
+              </div>
+            </div>
+
+            <p class="poster-desc" id="preview-desc">
+              Keterangan warta ibadah minggu ini akan tampil di bagian ini.
+            </p>
+
+            <div class="poster-btn-fake">
+              <i class="fa-brands fa-instagram"></i> Buka Postingan Instagram ↗
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Success Toast -->
+  <div class="toast" id="toast">
+    <i class="fa-solid fa-circle-check" style="font-size: 1.3rem;"></i>
+    <div>
+      <div style="font-size: 0.92rem;">Perubahan Berhasil Disimpan!</div>
+      <div style="font-size: 0.78rem; font-weight: 400; opacity: 0.9;">Halaman utama website sudah otomatis ter-update secara real-time.</div>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const CLOUD_ENDPOINT = 'https://api.npoint.io/2b11d95a7b2b7a8a1776';
+    const ADMIN_PASSWORD_HASH = 'sisbusan2026'; // Default admin password
+
+    // Check login state
+    window.addEventListener('DOMContentLoaded', () => {
+      const isAuth = sessionStorage.getItem('sis_admin_auth') || localStorage.getItem('sis_admin_auth');
+      if (isAuth === 'true') {
+        document.getElementById('auth-modal').style.display = 'none';
+      }
+      loadCurrentCloudData();
+    });
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('auth-password').value;
+      if (input === ADMIN_PASSWORD_HASH) {
+        sessionStorage.setItem('sis_admin_auth', 'true');
+        document.getElementById('auth-modal').style.display = 'none';
+      } else {
+        document.getElementById('auth-error').style.display = 'block';
+      }
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('sis_admin_auth');
+      localStorage.removeItem('sis_admin_auth');
+      window.location.reload();
+    }
+
+    // Load active cloud data into form
+    function loadCurrentCloudData() {
+      fetch(CLOUD_ENDPOINT)
+        .then(res => res.json())
+        .then(data => {
+          if (!data) return;
+          if (data.instagramUrl) document.getElementById('input-ig-url').value = data.instagramUrl;
+          if (data.imageUrl) document.getElementById('input-img-url').value = data.imageUrl;
+          if (data.theme) document.getElementById('input-theme').value = data.theme;
+          if (data.speaker) document.getElementById('input-speaker').value = data.speaker;
+          if (data.schedule) document.getElementById('input-schedule').value = data.schedule;
+          if (data.location) document.getElementById('input-location').value = data.location;
+          if (data.description) document.getElementById('input-desc').value = data.description;
+          updateLivePreview();
+        })
+        .catch(() => {
+          updateLivePreview();
+        });
+    }
+
+    // Real-time Preview updates
+    function handleInputChange() {
+      updateLivePreview();
+    }
+
+    function updateLivePreview() {
+      const img = document.getElementById('input-img-url').value;
+      const theme = document.getElementById('input-theme').value;
+      const speaker = document.getElementById('input-speaker').value;
+      const schedule = document.getElementById('input-schedule').value;
+      const location = document.getElementById('input-location').value;
+      const desc = document.getElementById('input-desc').value;
+
+      if (img) document.getElementById('preview-img').src = img;
+      document.getElementById('preview-title').textContent = theme || "“Tema Khotbah Akan Muncul di Sini”";
+      document.getElementById('preview-speaker').textContent = speaker || "Pembicara: Pdt. Nama Pembicara";
+      document.getElementById('preview-schedule').textContent = schedule || "Setiap Minggu, 12:00 – 14:00 KST";
+      document.getElementById('preview-location').textContent = location || "Vision Center Lt. 2 (Bexco Exit 1)";
+      document.getElementById('preview-desc').textContent = desc || "Keterangan warta ibadah minggu ini akan tampil di bagian ini.";
+    }
+
+    // Auto fetch info from Instagram link via public CORS proxy
+    async function fetchInstagramData() {
+      const url = document.getElementById('input-ig-url').value.trim();
+      if (!url || !url.includes('instagram.com/p/')) {
+        alert('Silakan masukkan link postingan Instagram yang valid (contoh: https://www.instagram.com/p/DclUqbjE42Y/)');
+        return;
+      }
+
+      const btn = document.getElementById('btn-fetch');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengambil...';
+      btn.disabled = true;
+
+      try {
+        // Fetch via allorigins CORS proxy
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const res = await fetch(proxyUrl);
+        const data = await res.json();
+        const html = data.contents || '';
+
+        // Extract og:image
+        const imgMatch = html.match(/<meta property="og:image" content="([^"]+)"/i) ||
+                         html.match(/<meta name="twitter:image" content="([^"]+)"/i);
+        if (imgMatch && imgMatch[1]) {
+          let cleanImg = imgMatch[1].replace(/&amp;/g, '&');
+          // Replace crop parameter if present
+          cleanImg = cleanImg.replace(/stp=c\d+\.\d+\.\d+\.\d+a_dst-jpg_e35_s\d+x\d+_tt6/, 'stp=dst-jpg_e35_tt6');
+          document.getElementById('input-img-url').value = cleanImg;
+        }
+
+        // Extract caption from meta description
+        const descMatch = html.match(/<meta name="description" content="([^"]+)"/i) ||
+                          html.match(/<meta property="og:description" content="([^"]+)"/i);
+        if (descMatch && descMatch[1]) {
+          const caption = descMatch[1].replace(/&quot;/g, '"').replace(/&#x27;/g, "'");
+          
+          // Try to parse theme: text between quotes or "tema kotbah :"
+          const themeMatch = caption.match(/tema kotbah\s*:\s*\n*["“]?([^"”\n\r]+)["”]?/i);
+          if (themeMatch && themeMatch[1]) {
+            document.getElementById('input-theme').value = `“${themeMatch[1].trim()}”`;
+          }
+
+          // Try to parse speaker: "-Pdt. ...-"
+          const speakerMatch = caption.match(/-\s*(Pdt\.?[^\n\r-]+)\s*-?/i);
+          if (speakerMatch && speakerMatch[1]) {
+            document.getElementById('input-speaker').value = `Pembicara: ${speakerMatch[1].trim()}`;
+          }
+        }
+
+        updateLivePreview();
+        showToast("✓ Berhasil mengambil info dari Instagram!");
+      } catch (err) {
+        alert('Gagal mengambil otomatis dari Instagram (kebijakan anti-bot Meta). Anda tetap bisa mengisi kolom formulir secara manual.');
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    // Save to Cloud Endpoint (npoint.io)
+    async function handleSave(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-save');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan ke Cloud...';
+      btn.disabled = true;
+
+      const payload = {
+        instagramUrl: document.getElementById('input-ig-url').value.trim(),
+        imageUrl: document.getElementById('input-img-url').value.trim(),
+        theme: document.getElementById('input-theme').value.trim(),
+        speaker: document.getElementById('input-speaker').value.trim(),
+        schedule: document.getElementById('input-schedule').value.trim(),
+        location: document.getElementById('input-location').value.trim(),
+        description: document.getElementById('input-desc').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      try {
+        const res = await fetch(CLOUD_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('Gagal menyimpan ke server');
+
+        showToast("🎉 Perubahan berhasil disimpan! Website utama sudah ter-update secara real-time.");
+      } catch (err) {
+        alert("Terjadi kesalahan saat menyimpan data: " + err.message);
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (msg) toast.querySelector('div div').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+  </script>
+</body>
+</html>

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavScroll();
   initVideoPlayer();
   initHeroSlideshow();
+  initLiveWeeklyPoster();
 });
 
 /* Currently active language ('id' | 'en' | 'kr'), persisted across visits */
@@ -319,6 +320,14 @@ const translations = {
     timerHours: "Jam",
     timerMins: "Menit",
     timerSecs: "Detik",
+    posterBadge: "Tema Pekan Ini",
+    posterTitle: "“Berkat Bagi Mereka Yang Murni Hatinya”",
+    posterSpeaker: "Pembicara: Pdt. Misnan Nanang",
+    posterSchedule: "Setiap Minggu, 12:00 – 14:00 KST",
+    posterLocation: "Vision Center Lt. 2 (Bexco Exit 1)",
+    posterDesc: "Hadirilah kebaktian umum minggu ini bersama keluarga besar SIS di Busan. Pujian penyembahan, pemberitaan firman Tuhan, dan ramah tamah makan siang bersama.",
+    posterBtn: "Buka Postingan Instagram ↗",
+    posterClickHint: "Klik untuk membuka postingan di Instagram",
     sectionVisit: "JADWAL & IBADAH",
     visitTitle: "Jadwal Ibadah & Persekutuan",
     visitSubtitle: "Mari bergabung bertumbuh dalam iman dan firman Tuhan bersama saudara seiman di Busan.",
@@ -420,6 +429,14 @@ const translations = {
     timerHours: "Hours",
     timerMins: "Minutes",
     timerSecs: "Seconds",
+    posterBadge: "This Week's Theme",
+    posterTitle: "“Blessed Are the Pure in Heart”",
+    posterSpeaker: "Speaker: Rev. Misnan Nanang",
+    posterSchedule: "Every Sunday, 12:00 – 14:00 KST",
+    posterLocation: "Vision Center 2nd Floor (Bexco Exit 1)",
+    posterDesc: "Join our Sunday worship service with the SIS Busan family. Praise and worship, the preaching of the Word, and lunch fellowship together.",
+    posterBtn: "Open Instagram Post ↗",
+    posterClickHint: "Click to view full post on Instagram",
     sectionVisit: "SCHEDULE & WORSHIP",
     visitTitle: "Worship Schedule & Fellowship",
     visitSubtitle: "Join us and grow in faith and the Word of God together with fellow believers in Busan.",
@@ -521,6 +538,14 @@ const translations = {
     timerHours: "시간",
     timerMins: "분",
     timerSecs: "초",
+    posterBadge: "이번 주 말씀 주제",
+    posterTitle: "“마음이 청결한 자의 복”",
+    posterSpeaker: "설교: 미스난 나낭 목사",
+    posterSchedule: "매주 일요일 12:00 – 14:00 KST",
+    posterLocation: "비전센터 2층 (벡스코역 1번 출구)",
+    posterDesc: "부산 SIS 공동체와 함께하는 주일 대예배에 참석해 보세요. 은혜로운 찬양과 말씀, 그리고 점심 애찬 교제가 함께합니다.",
+    posterBtn: "인스타그램 게시물 보기 ↗",
+    posterClickHint: "인스타그램에서 게시물 보기",
     sectionVisit: "예배 및 모임 안내",
     visitTitle: "예배 일정 및 모임 안내",
     visitSubtitle: "부산의 믿음의 지체들과 함께 신앙과 말씀 안에서 성장해 나가요.",
@@ -715,3 +740,69 @@ function initParticles() {
     height = canvas.height = window.innerHeight;
   });
 }
+
+/* ==========================================================
+   7. Live Cloud Weekly Poster Integration (npoint.io)
+   ========================================================== */
+const POSTER_CLOUD_ENDPOINT = 'https://api.npoint.io/2b11d95a7b2b7a8a1776';
+
+function initLiveWeeklyPoster() {
+  const linkEl = document.getElementById('live-poster-link');
+  const imgEl = document.getElementById('live-poster-img');
+  const titleEl = document.getElementById('live-poster-title');
+  const speakerEl = document.getElementById('live-poster-speaker');
+  const scheduleEl = document.getElementById('live-poster-schedule');
+  const locationEl = document.getElementById('live-poster-location');
+  const descEl = document.getElementById('live-poster-desc');
+
+  if (!linkEl || !imgEl) return;
+
+  function applyPosterData(data) {
+    if (!data) return;
+    if (data.instagramUrl && linkEl) linkEl.href = data.instagramUrl;
+    if (data.imageUrl && imgEl) imgEl.src = data.imageUrl;
+    if (data.theme && titleEl) {
+      titleEl.textContent = data.theme;
+      if (translations.id) translations.id.posterTitle = data.theme;
+    }
+    if (data.speaker && speakerEl) {
+      speakerEl.textContent = data.speaker;
+      if (translations.id) translations.id.posterSpeaker = data.speaker;
+    }
+    if (data.schedule && scheduleEl) {
+      scheduleEl.textContent = data.schedule;
+      if (translations.id) translations.id.posterSchedule = data.schedule;
+    }
+    if (data.location && locationEl) {
+      locationEl.textContent = data.location;
+      if (translations.id) translations.id.posterLocation = data.location;
+    }
+    if (data.description && descEl) {
+      descEl.textContent = data.description;
+      if (translations.id) translations.id.posterDesc = data.description;
+    }
+  }
+
+  // 1. Instant apply from cache if available
+  try {
+    const cached = localStorage.getItem('sis_weekly_service');
+    if (cached) applyPosterData(JSON.parse(cached));
+  } catch (e) {}
+
+  // 2. Live sync from Cloud Endpoint
+  fetch(POSTER_CLOUD_ENDPOINT)
+    .then(res => {
+      if (!res.ok) throw new Error('Network response not ok');
+      return res.json();
+    })
+    .then(data => {
+      applyPosterData(data);
+      try {
+        localStorage.setItem('sis_weekly_service', JSON.stringify(data));
+      } catch (e) {}
+    })
+    .catch(() => {
+      // Quietly preserve static default on offline or network error
+    });
+}
+

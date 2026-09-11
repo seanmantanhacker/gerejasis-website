@@ -102,6 +102,19 @@ Semua teks yang ditandai atribut `data-i18n` / `data-i18n-html` diterjemahkan le
 
 ---
 
+## 🔐 Halaman Khusus Admin (`/admin` / `admin.html`)
+
+Untuk mengupdate poster Ibadah Raya Minggu dan tema khotbah setiap pekan secara **real-time tanpa perlu melakukan git commit**:
+1. Buka halaman `https://<domain-website>/admin.html` (atau `/admin`).
+2. Masukkan password admin (default: `sisbusan2026`).
+3. Masukkan link postingan Instagram terbaru (misal: `https://www.instagram.com/p/DclUqbjE42Y/`).
+4. Klik **"Ambil Info"** atau sesuaikan Tema Khotbah, Pembicara, dan Jadwal pada formulir.
+5. Periksa tampilan pada **Live Preview**.
+6. Klik tombol **"Simpan & Tampilkan di Website Langsung"**.
+7. Data langsung tersimpan di Cloud JSON API dan website utama (`index.html`) seketika menampilkan poster dan warta terbaru.
+
+---
+
 ## ⛪ Kontak & Informasi Gereja
 
 - **Alamat**: 수영로교회 비전센터 2층, 부산광역시 해운대구 해운대로 402
