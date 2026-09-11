@@ -585,9 +585,9 @@
                      class="form-input" 
                      placeholder="https://www.instagram.com/p/..." 
                      required
-                     oninput="handleInputChange()">
-              <button type="button" class="input-addon-btn" onclick="fetchInstagramData()" id="btn-fetch">
-                <i class="fa-brands fa-instagram"></i> Ambil Info
+                     oninput="handleIgUrlInput()">
+              <button type="button" class="input-addon-btn" onclick="fetchInstagramData(false)" id="btn-fetch">
+                <i class="fa-brands fa-instagram"></i> Ambil Info Otomatis
               </button>
             </div>
             <small style="font-size: 0.76rem; color: var(--text-dim); display: block; margin-top: 0.35rem;">
@@ -595,15 +595,23 @@
             </small>
           </div>
 
-          <!-- Image URL -->
+          <!-- Image URL (Automated) -->
           <div class="form-group">
-            <label class="form-label" for="input-img-url">2. URL Gambar Poster (Resolusi Penuh)</label>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
+              <label class="form-label" for="input-img-url" style="margin-bottom: 0;">2. URL Gambar Poster (Otomatis Terdeteksi)</label>
+              <span style="font-size: 0.74rem; color: var(--accent-green); font-weight: 700;">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Otomatis
+              </span>
+            </div>
             <input type="url" 
                    id="input-img-url" 
                    class="form-input" 
-                   placeholder="https://...jpg" 
+                   placeholder="Otomatis didapatkan dari link Instagram di atas" 
                    required
                    oninput="handleInputChange()">
+            <small style="font-size: 0.76rem; color: var(--text-dim); display: block; margin-top: 0.35rem;">
+              ✓ Gambar poster otomatis terdeteksi saat Anda memasukkan link Instagram di atas. Anda tidak perlu mencari URL gambar secara manual.
+            </small>
           </div>
 
           <!-- Sermon Theme -->
@@ -790,6 +798,23 @@
         });
     }
 
+    // Auto-derive image URL when Instagram link is entered/pasted
+    function handleIgUrlInput() {
+      const url = document.getElementById('input-ig-url').value.trim();
+      const match = url.match(/instagram\.com\/p\/([A-Za-z0-9_-]+)/);
+      if (match && match[1]) {
+        const shortcode = match[1];
+        const imgInput = document.getElementById('input-img-url');
+        // Set standard Instagram media URL as fast automatic fallback
+        if (!imgInput.value || imgInput.value.includes('instagram.com/p/')) {
+          imgInput.value = `https://www.instagram.com/p/${shortcode}/media/?size=l`;
+        }
+        // Auto fetch full metadata in background (silent mode)
+        fetchInstagramData(true);
+      }
+      updateLivePreview();
+    }
+
     // Real-time Preview updates
     function handleInputChange() {
       updateLivePreview();
@@ -812,17 +837,19 @@
     }
 
     // Auto fetch info from Instagram link via public CORS proxy
-    async function fetchInstagramData() {
+    async function fetchInstagramData(silent = false) {
       const url = document.getElementById('input-ig-url').value.trim();
       if (!url || !url.includes('instagram.com/p/')) {
-        alert('Silakan masukkan link postingan Instagram yang valid (contoh: https://www.instagram.com/p/DclUqbjE42Y/)');
+        if (!silent) alert('Silakan masukkan link postingan Instagram yang valid (contoh: https://www.instagram.com/p/DclUqbjE42Y/)');
         return;
       }
 
       const btn = document.getElementById('btn-fetch');
       const originalText = btn.innerHTML;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengambil...';
-      btn.disabled = true;
+      if (!silent) {
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengambil...';
+        btn.disabled = true;
+      }
 
       try {
         // Fetch via allorigins CORS proxy
@@ -861,12 +888,14 @@
         }
 
         updateLivePreview();
-        showToast("✓ Berhasil mengambil info dari Instagram!");
+        if (!silent) showToast("✓ Berhasil mengambil info dari Instagram!");
       } catch (err) {
-        alert('Gagal mengambil otomatis dari Instagram (kebijakan anti-bot Meta). Anda tetap bisa mengisi kolom formulir secara manual.');
+        if (!silent) alert('Gagal mengambil otomatis dari Instagram. Namun URL gambar tetap otomatis aktif.');
       } finally {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
+        if (!silent) {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }
       }
     }
 
