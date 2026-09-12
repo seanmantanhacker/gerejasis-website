@@ -626,20 +626,26 @@
 
           <!-- Image URL (Automated & Uncropped Options) -->
           <div class="form-group">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.35rem;">
               <label class="form-label" for="input-img-url" style="margin-bottom: 0;">2. URL Gambar Poster (Vertikal / Tidak Terpotong)</label>
-              <button type="button" class="btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;" onclick="useLocalPoster()" title="Gunakan file poster lokal HD">
-                <i class="fa-solid fa-file-image"></i> Poster HD Lokal
-              </button>
+              <div style="display: flex; gap: 0.35rem;">
+                <input type="file" id="poster-file-input" accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
+                <button type="button" class="btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;" onclick="document.getElementById('poster-file-input').click()" title="Upload file gambar dari komputer/HP">
+                  <i class="fa-solid fa-cloud-arrow-up"></i> Upload Gambar
+                </button>
+                <button type="button" class="btn-outline" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;" onclick="useLocalPoster()" title="Gunakan file poster lokal HD">
+                  <i class="fa-solid fa-file-image"></i> Poster HD Lokal
+                </button>
+              </div>
             </div>
             <input type="text" 
                    id="input-img-url" 
                    class="form-input" 
-                   placeholder="Otomatis didapatkan atau tempel URL poster vertikal..." 
+                   placeholder="Otomatis didapatkan dari Instagram, atau upload file gambar sendiri..." 
                    required
                    oninput="handleInputChange()">
             <small style="font-size: 0.76rem; color: var(--text-dim); display: block; margin-top: 0.35rem; line-height: 1.4;">
-              ✓ Menampilkan poster vertikal utuh (tidak terpotong). Jika ingin menggunakan file poster lokal yang tersimpan di website, klik tombol <em>"Poster HD Lokal"</em>.
+              ✓ Otomatis mengambil poster vertikal utuh dari Instagram. Anda juga bisa <strong>Upload File Gambar</strong> atau <strong>Paste (Ctrl+V)</strong> langsung dari clipboard.
             </small>
           </div>
 
@@ -816,7 +822,7 @@
         }
       } catch (e) {}
 
-      fetch(CLOUD_ENDPOINT, { signal: AbortSignal.timeout(6000) })
+      fetch(`${CLOUD_ENDPOINT}?_t=${Date.now()}`, { cache: 'no-store', signal: AbortSignal.timeout(6000) })
         .then(res => res.json())
         .then(data => {
           if (data) populateFormWithData(data);
@@ -889,6 +895,67 @@
       showToast("✓ Menggunakan poster HD lokal (tidak terpotong)!");
     }
 
+    // Helper: File upload handling & canvas compression (<70KB)
+    function handleFileSelect(e) {
+      const file = e.target.files && e.target.files[0];
+      if (file) processPosterFile(file);
+    }
+
+    function processPosterFile(file) {
+      if (!file.type || !file.type.startsWith('image/')) {
+        showToast("Harap pilih file gambar (JPG, PNG, WebP).", true);
+        return;
+      }
+      showToast("Sedang mengoptimalkan gambar poster...");
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 960;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) {
+              h = Math.round((h * maxDim) / w);
+              w = maxDim;
+            } else {
+              w = Math.round((w * maxDim) / h);
+              h = maxDim;
+            }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          document.getElementById('input-img-url').value = dataUrl;
+          updateLivePreview();
+          showToast("✓ File poster berhasil dimuat & dioptimalkan!");
+        };
+        img.onerror = function() {
+          showToast("Gagal memproses file gambar.", true);
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Helper: Listen for image paste (Ctrl+V) anywhere on page
+    window.addEventListener('paste', (e) => {
+      if (e.clipboardData && e.clipboardData.items) {
+        for (const item of e.clipboardData.items) {
+          if (item.type && item.type.startsWith('image/')) {
+            const file = item.getAsFile();
+            if (file) {
+              processPosterFile(file);
+              break;
+            }
+          }
+        }
+      }
+    });
+
     // Parse caption text and populate form fields
     function parseAndApplyCaption(caption) {
       if (!caption) return false;
@@ -915,20 +982,22 @@
       }
 
       // 3. Schedule
-      const dateMatch = clean.match(/[🗓📅]\s*([^\n\r]+)/i);
-      const timeMatch = clean.match(/[🕛🕚🕒⏰]\s*([^\n\r]+)/i);
+      const dateMatch = clean.match(/(?:🗓|📅)\s*([^\n\r]+)/u);
+      const timeMatch = clean.match(/(?:🕛|🕚|🕒|⏰)\s*([^\n\r]+)/u);
       if (dateMatch && timeMatch) {
         let timeStr = timeMatch[1].trim();
         if (!timeStr.toLowerCase().includes('kst')) timeStr += ' KST';
         document.getElementById('input-schedule').value = `${dateMatch[1].trim()}, ${timeStr}`;
         foundAny = true;
       } else if (dateMatch) {
-        document.getElementById('input-schedule').value = dateMatch[1].trim();
+        let dt = dateMatch[1].trim();
+        if (!dt.toLowerCase().includes('12.00') && !dt.toLowerCase().includes('kst')) dt += ', 12.00 PM KST';
+        document.getElementById('input-schedule').value = dt;
         foundAny = true;
       }
 
       // 4. Location
-      const locMatch = clean.match(/[📍]\s*([^\n\r]+)/i);
+      const locMatch = clean.match(/(?:📍)\s*([^\n\r]+)/u);
       if (locMatch && locMatch[1]) {
         let loc = locMatch[1].trim();
         if (loc.includes('Olympic') || loc.includes('Gedung Olympic')) {
@@ -984,6 +1053,7 @@
         return;
       }
 
+      const shortcode = match[1];
       const btn = document.getElementById('btn-fetch');
       const statusEl = document.getElementById('ig-fetch-status');
       const originalText = btn.innerHTML;
@@ -993,40 +1063,58 @@
       if (statusEl) {
         statusEl.style.display = 'block';
         statusEl.style.color = 'var(--primary-light)';
-        statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mendeteksi info & gambar...';
+        statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mendeteksi info warta & poster vertikal...';
       }
 
       let success = false;
+      let foundUncroppedImg = null;
 
-      // Tier 1: Microlink OpenGraph API (Native browser CORS support)
+      // Tier 1: Extract uncropped full portrait poster from Instagram Embed via Jina Reader
+      try {
+        const embedUrl = `https://www.instagram.com/p/${shortcode}/embed/`;
+        const jinaEmbedUrl = `https://r.jina.ai/${embedUrl}`;
+        const res = await fetch(jinaEmbedUrl, {
+          headers: { 'Accept': 'text/plain' },
+          signal: AbortSignal.timeout(9000)
+        });
+        if (res.ok) {
+          const text = await res.text();
+          const matches = text.match(/https:\/\/[^"'\\><\s]+?(?:\.jpg|\.heic|\.jpeg|\.webp)[^"'\\><\s]*/gi) || [];
+          for (const m of matches) {
+            let clean = m.replace(/\\u0026/g, '&').replace(/&amp;/g, '&').split(')')[0].split(']')[0];
+            if (clean.includes('t51.82787-15') && !clean.includes('stp=c')) {
+              foundUncroppedImg = clean;
+              break;
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Embed uncropped extraction error:', err);
+      }
+
+      // Tier 2: Microlink API (for post description/captions & fallback image)
       try {
         const proxyUrl = `https://api.microlink.io/?url=${encodeURIComponent(url)}`;
         const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(9000) });
         if (res.ok) {
           const json = await res.json();
           if (json.status === 'success' && json.data) {
-            // 1. Direct high-res image URL (prefer uncropped HD poster if square crop detected)
-            if (json.data.image && json.data.image.url) {
-              const fetchedImg = json.data.image.url;
-              if (fetchedImg.includes('stp=c') || fetchedImg.includes('s640x640')) {
-                document.getElementById('input-img-url').value = './assets/images/weekly-poster.jpg';
-              } else {
-                document.getElementById('input-img-url').value = fetchedImg;
-              }
-              success = true;
-            }
-            // 2. Caption parsing
+            // Caption parsing
             if (json.data.description) {
               parseAndApplyCaption(json.data.description);
               success = true;
             }
+            // Fallback image if Tier 1 didn't find uncropped
+            if (!foundUncroppedImg && json.data.image && json.data.image.url) {
+              foundUncroppedImg = json.data.image.url;
+            }
           }
         }
       } catch (err) {
-        console.warn('Tier 1 Microlink error:', err);
+        console.warn('Tier 2 Microlink error:', err);
       }
 
-      // Tier 2: Jina Reader API (Fallback)
+      // Tier 3: Jina Reader API on main post URL as fallback for captions
       if (!success) {
         try {
           const jinaUrl = `https://r.jina.ai/${url}`;
@@ -1042,18 +1130,20 @@
                 parseAndApplyCaption(text);
                 success = true;
               }
-              if (!document.getElementById('input-img-url').value && json.data.content) {
-                const imgMatch = json.data.content.match(/!\[.*?\]\((https?:\/\/[^\)]+)\)/);
-                if (imgMatch && imgMatch[1]) {
-                  document.getElementById('input-img-url').value = imgMatch[1];
-                  success = true;
-                }
-              }
             }
           }
         } catch (err) {
-          console.warn('Tier 2 Jina error:', err);
+          console.warn('Tier 3 Jina error:', err);
         }
+      }
+
+      // Apply the image URL (wrapped with weserv.nl proxy for CDN stability & CORS)
+      if (foundUncroppedImg) {
+        const finalImg = foundUncroppedImg.startsWith('data:') || foundUncroppedImg.startsWith('./')
+          ? foundUncroppedImg
+          : `https://images.weserv.nl/?url=${encodeURIComponent(foundUncroppedImg)}`;
+        document.getElementById('input-img-url').value = finalImg;
+        success = true;
       }
 
       btn.innerHTML = originalText;
@@ -1063,16 +1153,16 @@
       if (success) {
         if (statusEl) {
           statusEl.style.color = 'var(--accent-green)';
-          statusEl.innerHTML = '<i class="fa-solid fa-check-circle"></i> Info & poster berhasil terdeteksi!';
+          statusEl.innerHTML = '<i class="fa-solid fa-check-circle"></i> Info & poster berhasil diperbarui!';
         }
-        if (!silent) showToast("✓ Berhasil mengambil info & poster dari Instagram!");
+        if (!silent) showToast("✓ Berhasil mengambil info & poster terbaru dari Instagram!");
       } else {
         if (statusEl) {
           statusEl.style.color = 'var(--accent-gold)';
-          statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Deteksi otomatis terhalang bot protection. Silakan gunakan tombol "Bantuan: Tempel Caption" atau masukkan manual.';
+          statusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Deteksi terhalang proteksi. Silakan gunakan tombol "Upload Gambar" atau "Bantuan: Tempel Caption".';
         }
         if (!silent) {
-          showToast("⚠️ Deteksi otomatis dibatasi Instagram. Silakan gunakan bantuan tempel caption di bawah.", true);
+          showToast("⚠️ Deteksi otomatis dibatasi Instagram. Silakan upload gambar poster atau masukkan manual.", true);
         }
       }
     }

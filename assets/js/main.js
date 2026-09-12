@@ -761,11 +761,15 @@ function initLiveWeeklyPoster() {
     if (!data) return;
     if (data.instagramUrl && linkEl) linkEl.href = data.instagramUrl;
     if (data.imageUrl && imgEl) {
-      if (data.imageUrl.includes('stp=c') || data.imageUrl.includes('s640x640')) {
-        imgEl.src = './assets/images/weekly-poster.jpg';
-      } else {
-        imgEl.src = data.imageUrl;
-      }
+      imgEl.onerror = () => {
+        if (!imgEl.dataset.fallbackDone && (data.imageUrl.includes('cdninstagram.com') || data.imageUrl.includes('fbcdn.net'))) {
+          imgEl.dataset.fallbackDone = 'true';
+          imgEl.src = 'https://images.weserv.nl/?url=' + encodeURIComponent(data.imageUrl);
+        } else {
+          imgEl.src = './assets/images/weekly-poster.jpg';
+        }
+      };
+      imgEl.src = data.imageUrl;
     }
     if (data.theme && titleEl) {
       titleEl.textContent = data.theme;
@@ -795,8 +799,8 @@ function initLiveWeeklyPoster() {
     if (cached) applyPosterData(JSON.parse(cached));
   } catch (e) {}
 
-  // 2. Live sync from Cloud Endpoint
-  fetch(POSTER_CLOUD_ENDPOINT)
+  // 2. Live sync from Cloud Endpoint with cache busting
+  fetch(`${POSTER_CLOUD_ENDPOINT}?_t=${Date.now()}`, { cache: 'no-store' })
     .then(res => {
       if (!res.ok) throw new Error('Network response not ok');
       return res.json();
