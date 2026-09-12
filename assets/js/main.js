@@ -321,10 +321,10 @@ const translations = {
     timerMins: "Menit",
     timerSecs: "Detik",
     posterBadge: "Tema Pekan Ini",
-    posterTitle: "“Berkat Bagi Mereka Yang Murni Hatinya”",
+    posterTitle: "“Berbahagialah Orang Yang Dianiaya”",
     posterSpeaker: "Pembicara: Pdt. Misnan Nanang",
-    posterSchedule: "Setiap Minggu, 12:00 – 14:00 KST",
-    posterLocation: "Vision Center Lt. 2 (Bexco Exit 1)",
+    posterSchedule: "Minggu, 13 September 2026, 12.00 PM KST",
+    location: "Gedung Olympic Lt. 2 (Bexco Exit 1)",
     posterDesc: "Hadirilah kebaktian umum minggu ini bersama keluarga besar SIS di Busan. Pujian penyembahan, pemberitaan firman Tuhan, dan ramah tamah makan siang bersama.",
     posterBtn: "Buka Postingan Instagram ↗",
     posterClickHint: "Klik untuk membuka postingan di Instagram",
@@ -760,7 +760,13 @@ function initLiveWeeklyPoster() {
   function applyPosterData(data) {
     if (!data) return;
     if (data.instagramUrl && linkEl) linkEl.href = data.instagramUrl;
-    if (data.imageUrl && imgEl) imgEl.src = data.imageUrl;
+    if (data.imageUrl && imgEl) {
+      if (data.imageUrl.includes('stp=c') || data.imageUrl.includes('s640x640')) {
+        imgEl.src = './assets/images/weekly-poster.jpg';
+      } else {
+        imgEl.src = data.imageUrl;
+      }
+    }
     if (data.theme && titleEl) {
       titleEl.textContent = data.theme;
       if (translations.id) translations.id.posterTitle = data.theme;
