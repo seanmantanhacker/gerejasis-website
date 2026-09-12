@@ -791,6 +791,98 @@ function initLiveWeeklyPoster() {
       descEl.textContent = data.description;
       if (translations.id) translations.id.posterDesc = data.description;
     }
+
+    if (data.youtubeLive !== undefined) {
+      applyYoutubeLiveStatus(data.youtubeLive);
+    }
+    if (data.upcomingEvents !== undefined) {
+      applyUpcomingEvents(data.upcomingEvents);
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function applyYoutubeLiveStatus(isLive) {
+    const badge = document.getElementById('youtube-live-badge');
+    const badgeText = document.getElementById('youtube-live-badge-text');
+    const noticeBox = document.getElementById('youtube-offline-notice-box');
+    const mainBtn = document.getElementById('youtube-live-btn-primary');
+    const btnIcon = document.getElementById('youtube-live-btn-icon');
+    const btnText = document.getElementById('youtube-live-btn-text');
+    const floatBtn = document.getElementById('floating-btn-live');
+    const floatIcon = document.getElementById('floating-btn-live-icon');
+    const floatText = document.getElementById('floating-btn-live-text');
+    const rightLink = document.getElementById('youtube-live-right-link');
+    const rightHandle = document.getElementById('youtube-right-handle');
+
+    if (isLive === false) {
+      if (badge) badge.classList.add('offline');
+      if (badgeText) badgeText.textContent = "Arsip & Rekaman Ibadah";
+      if (noticeBox) {
+        noticeBox.innerHTML = `
+          <div class="youtube-offline-notice">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>Minggu ini tidak ada siaran langsung. Silakan tonton rekaman ibadah sebelumnya di YouTube.</span>
+          </div>`;
+      }
+      if (mainBtn) {
+        mainBtn.classList.remove('btn-youtube-live');
+        mainBtn.classList.add('btn-youtube-offline');
+        mainBtn.href = "https://www.youtube.com/@sisindonesia1611";
+      }
+      if (btnIcon) btnIcon.textContent = "📺";
+      if (btnText) btnText.textContent = "Tonton Rekaman Khotbah di YouTube ↗";
+      if (floatBtn) floatBtn.href = "https://www.youtube.com/@sisindonesia1611";
+      if (floatIcon) floatIcon.textContent = "📺";
+      if (floatText) floatText.textContent = "YouTube";
+      if (rightLink) rightLink.href = "https://www.youtube.com/@sisindonesia1611";
+      if (rightHandle) rightHandle.textContent = "@sisindonesia1611";
+    } else {
+      if (badge) badge.classList.remove('offline');
+      if (badgeText) badgeText.textContent = "Live Streaming YouTube Resmi";
+      if (noticeBox) noticeBox.innerHTML = "";
+      if (mainBtn) {
+        mainBtn.classList.add('btn-youtube-live');
+        mainBtn.classList.remove('btn-youtube-offline');
+        mainBtn.href = "https://www.youtube.com/@sisindonesia1611/streams";
+      }
+      if (btnIcon) btnIcon.textContent = "🔴";
+      if (btnText) btnText.textContent = "Buka YouTube Live Streams ↗";
+      if (floatBtn) floatBtn.href = "https://www.youtube.com/@sisindonesia1611/streams";
+      if (floatIcon) floatIcon.textContent = "🔴";
+      if (floatText) floatText.textContent = "Live";
+      if (rightLink) rightLink.href = "https://www.youtube.com/@sisindonesia1611/streams";
+      if (rightHandle) rightHandle.textContent = "@sisindonesia1611/streams";
+    }
+  }
+
+  function applyUpcomingEvents(events) {
+    const container = document.getElementById('upcoming-activities-container');
+    if (!container) return;
+
+    if (Array.isArray(events) && events.length > 0) {
+      container.innerHTML = events.map(evt => `
+        <article class="upcoming-activity-card">
+          <span class="upcoming-activity-date">📅 ${escapeHtml(evt.date || 'Segera')}</span>
+          <h4 class="upcoming-activity-name">${escapeHtml(evt.title || 'Acara Mendatang')}</h4>
+          ${evt.location ? `<div class="upcoming-activity-location"><i class="fa-solid fa-location-dot"></i> <span>${escapeHtml(evt.location)}</span></div>` : ''}
+          <p class="upcoming-activity-desc">${escapeHtml(evt.note || '')}</p>
+        </article>
+      `).join('');
+    } else {
+      container.innerHTML = `
+        <div class="upcoming-activities-empty">
+          <span class="upcoming-activities-empty-icon">🗓️</span>
+          <p data-i18n="upcomingEmpty">Belum ada kegiatan mendatang saat ini. Nantikan info Retreat, Natal, Hangout, dan acara lainnya di sini.</p>
+        </div>`;
+    }
   }
 
   // 1. Instant apply from cache if available

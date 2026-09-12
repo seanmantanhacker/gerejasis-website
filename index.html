@@ -358,21 +358,23 @@
 
         <div class="youtube-stream-card">
           <div class="youtube-card-left">
-            <div class="youtube-badge">
-              <span class="live-pulse" style="width: 8px; height: 8px;" aria-hidden="true"></span>
-              <span data-i18n="youtubeBadge">Live Streaming YouTube Resmi</span>
+            <div class="youtube-badge" id="youtube-live-badge">
+              <span class="live-pulse" id="youtube-live-pulse" style="width: 8px; height: 8px;" aria-hidden="true"></span>
+              <span id="youtube-live-badge-text" data-i18n="youtubeBadge">Live Streaming YouTube Resmi</span>
             </div>
             <h3 class="youtube-channel-title">Sis Indonesia</h3>
             <span class="youtube-channel-handle">@sisindonesia1611</span>
-            <p class="youtube-stream-desc" data-i18n-html="youtubeDesc">
+            <div id="youtube-offline-notice-box"></div>
+            <p class="youtube-stream-desc" id="youtube-stream-desc" data-i18n-html="youtubeDesc">
               Ibadah Raya Minggu disiarkan secara langsung (Live Streaming) setiap hari Minggu pukul <strong>12:00 – 14:00 KST</strong> (Waktu Korea). Bagi jemaat, sahabat, dan keluarga yang berhalangan hadir di lokasi, Anda dapat bergabung dalam ibadah dan pujian secara daring.
             </p>
             <div class="youtube-actions">
               <a href="https://www.youtube.com/@sisindonesia1611/streams"
                  target="_blank"
                  rel="noopener"
-                 class="btn btn-youtube-live">
-                <span>🔴</span> <span data-i18n="btnOpenYoutube">Buka YouTube Live Streams ↗</span>
+                 class="btn btn-youtube-live"
+                 id="youtube-live-btn-primary">
+                <span id="youtube-live-btn-icon">🔴</span> <span id="youtube-live-btn-text" data-i18n="btnOpenYoutube">Buka YouTube Live Streams ↗</span>
               </a>
               <a href="https://www.youtube.com/@sisindonesia1611"
                  target="_blank"
@@ -384,12 +386,12 @@
           </div>
 
           <div class="youtube-card-right">
-            <a href="https://www.youtube.com/@sisindonesia1611/streams" target="_blank" rel="noopener" aria-label="Buka kanal YouTube Sis Indonesia">
+            <a href="https://www.youtube.com/@sisindonesia1611/streams" id="youtube-live-right-link" target="_blank" rel="noopener" aria-label="Buka kanal YouTube Sis Indonesia">
               <div class="youtube-play-icon-box" title="Klik untuk membuka YouTube Streams">
                 ▶
               </div>
             </a>
-            <span style="margin-top: 1rem; font-size: 0.85rem; color: #fca5a5; font-weight: 700;">@sisindonesia1611/streams</span>
+            <span id="youtube-right-handle" style="margin-top: 1rem; font-size: 0.85rem; color: #fca5a5; font-weight: 700;">@sisindonesia1611/streams</span>
           </div>
         </div>
       </div>
@@ -435,7 +437,7 @@
         <!-- Upcoming Activities (Retreat, Natal, Hangout, dll) -->
         <div class="upcoming-activities">
           <h3 class="upcoming-activities-title"><span aria-hidden="true">📅</span> <span data-i18n="upcomingTitle">Kegiatan Mendatang</span></h3>
-          <div class="upcoming-activities-grid">
+          <div class="upcoming-activities-grid" id="upcoming-activities-container">
             <!--
               Template kartu upcoming activity — salin blok di bawah ini untuk setiap acara baru
               (contoh: Retreat, Perayaan Natal, Hangout, dll), lalu hapus komentar & elemen "empty state".
@@ -640,9 +642,9 @@
       <span>📅</span>
       <span data-i18n="floatSchedule">Jadwal</span>
     </a>
-    <a href="https://www.youtube.com/@sisindonesia1611/streams" target="_blank" rel="noopener" class="floating-btn">
-      <span>🔴</span>
-      <span data-i18n="floatLive">Live</span>
+    <a href="https://www.youtube.com/@sisindonesia1611/streams" target="_blank" rel="noopener" class="floating-btn" id="floating-btn-live">
+      <span id="floating-btn-live-icon">🔴</span>
+      <span data-i18n="floatLive" id="floating-btn-live-text">Live</span>
     </a>
     <button class="floating-btn copy-address-btn" style="background: none; border: none; cursor: pointer;">
       <span>📋</span>

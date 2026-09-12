@@ -514,6 +514,162 @@
       display: none;
     }
 
+    /* Admin Navigation Tabs */
+    .admin-tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 0.75rem;
+    }
+
+    .admin-tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 0.7rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all var(--transition-fast);
+    }
+
+    .admin-tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .admin-tab-btn.active {
+      background: rgba(14, 116, 144, 0.25);
+      border-color: rgba(56, 189, 248, 0.45);
+      color: var(--primary-light);
+    }
+
+    .badge-count {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--primary-light);
+      border-radius: var(--radius-full);
+      padding: 0.15rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    /* iOS/Modern Style Toggle Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #334155;
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #e11d48;
+      border-color: #f43f5e;
+      box-shadow: 0 0 10px rgba(225, 29, 72, 0.5);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+
+    /* Upcoming Events in Admin */
+    .events-grid-admin {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .event-card-admin {
+      background: rgba(7, 14, 28, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .event-card-admin:hover {
+      border-color: var(--border-glow);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .event-card-top {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .event-card-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-action-icon {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-action-icon:hover {
+      background: var(--primary-blue);
+      border-color: var(--primary-light);
+      color: #ffffff;
+    }
+
+    .btn-action-icon.danger:hover {
+      background: #e11d48;
+      border-color: #f43f5e;
+      color: #ffffff;
+    }
+
     @media (max-width: 900px) {
       .dashboard-grid {
         grid-template-columns: 1fr;
@@ -563,23 +719,57 @@
 
   <!-- Main Content -->
   <main class="admin-main">
-    <div class="dashboard-grid">
-      
-      <!-- Left Column: Form Controls -->
-      <section class="panel">
-        <h1 class="panel-title">
-          <i class="fa-solid fa-pen-to-square" style="color: var(--primary-light);"></i>
-          Update Ibadah Minggu Ini
-        </h1>
-        <p class="panel-desc">
-          Cukup tempelkan link postingan Instagram dan sesuaikan teks jika diperlukan. Perubahan akan <strong>langsung aktif di website utama secara real-time</strong> tanpa perlu git commit.
-        </p>
+    <!-- Admin Navigation Tabs -->
+    <div class="admin-tabs-nav">
+      <button type="button" class="admin-tab-btn active" id="tab-btn-weekly" onclick="switchAdminTab('weekly')">
+        <i class="fa-solid fa-church"></i> Warta Ibadah & YouTube Live
+      </button>
+      <button type="button" class="admin-tab-btn" id="tab-btn-events" onclick="switchAdminTab('events')">
+        <i class="fa-solid fa-calendar-days"></i> Acara Mendatang <span class="badge-count" id="events-count-badge">0</span>
+      </button>
+    </div>
 
-        <form id="poster-form" onsubmit="handleSave(event)">
-          <!-- Instagram URL -->
-          <div class="form-group">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
-              <label class="form-label" for="input-ig-url" style="margin-bottom: 0;">1. Link Postingan Instagram</label>
+    <!-- Tab 1: Weekly Service & YouTube Live -->
+    <div id="tab-content-weekly">
+      <div class="dashboard-grid">
+        
+        <!-- Left Column: Form Controls -->
+        <section class="panel">
+          <h1 class="panel-title">
+            <i class="fa-solid fa-pen-to-square" style="color: var(--primary-light);"></i>
+            Update Ibadah Minggu Ini
+          </h1>
+          <p class="panel-desc">
+            Cukup tempelkan link postingan Instagram dan sesuaikan teks jika diperlukan. Perubahan akan <strong>langsung aktif di website utama secara real-time</strong> tanpa perlu git commit.
+          </p>
+
+          <form id="poster-form" onsubmit="handleSave(event)">
+            <!-- YouTube Live Streaming Toggle Card -->
+            <div class="form-group" style="background: rgba(225, 29, 72, 0.08); border: 1px solid rgba(225, 29, 72, 0.25); border-radius: var(--radius-sm); padding: 0.9rem 1.15rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <div>
+                  <div style="font-size: 0.92rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem;">
+                    <i class="fa-brands fa-youtube" style="color: #f43f5e; font-size: 1.15rem;"></i>
+                    Status Siaran Live YouTube Pekan Ini
+                  </div>
+                  <p style="font-size: 0.76rem; color: var(--text-muted); margin: 0; line-height: 1.4;">
+                    Nyalakan jika ibadah disiarkan langsung. Matikan jika gereja tidak mengadakan live stream pekan ini.
+                  </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span id="youtube-toggle-label" style="font-size: 0.8rem; font-weight: 700; color: var(--accent-green);">🔴 Live Aktif</span>
+                  <label class="switch">
+                    <input type="checkbox" id="toggle-youtube-live" checked onchange="handleYoutubeToggleChange()">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Instagram URL -->
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
+                <label class="form-label" for="input-ig-url" style="margin-bottom: 0;">1. Link Postingan Instagram</label>
               <a href="https://instagram.com/gerejasis_official" id="link-open-ig" target="_blank" rel="noopener noreferrer" style="font-size: 0.76rem; color: var(--primary-light); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;">
                 <i class="fa-brands fa-instagram"></i> Buka di Instagram ↗
               </a>
@@ -590,7 +780,8 @@
                      class="form-input" 
                      placeholder="https://www.instagram.com/p/..." 
                      required
-                     oninput="handleIgUrlInput()">
+                     oninput="handleIgUrlInput()"
+                     onpaste="setTimeout(handleIgUrlInput, 50)">
               <button type="button" class="input-addon-btn" onclick="fetchInstagramData(false)" id="btn-fetch">
                 <i class="fa-brands fa-instagram"></i> Ambil Info Otomatis
               </button>
@@ -770,8 +961,75 @@
         </div>
       </section>
 
+      </div>
+    </div>
+
+    <!-- Tab 2: Upcoming Events Management -->
+    <div id="tab-content-events" style="display: none;">
+      <section class="panel" style="max-width: 960px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 1rem;">
+          <div>
+            <h1 class="panel-title" style="margin-bottom: 0.35rem;">
+              <i class="fa-solid fa-calendar-days" style="color: var(--accent-gold);"></i>
+              Kelola Acara & Kegiatan Mendatang
+            </h1>
+            <p class="panel-desc" style="margin-bottom: 0;">
+              Informasi acara gereja (Retreat, Natal, Fellowship, Outing, dsb.) akan langsung tampil di beranda website.
+            </p>
+          </div>
+          <button type="button" class="modal-btn" style="width: auto; padding: 0.65rem 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem;" onclick="openEventModal()">
+            <i class="fa-solid fa-plus"></i> Tambah Acara Baru
+          </button>
+        </div>
+
+        <!-- Events List Container -->
+        <div id="admin-events-list">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
     </div>
   </main>
+
+  <!-- Modal: Add / Edit Upcoming Event -->
+  <div class="modal-overlay" id="event-modal" style="display: none;">
+    <div class="modal-card" style="max-width: 520px; text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 0.75rem;">
+        <h3 class="modal-title" id="event-modal-title" style="font-size: 1.25rem; margin: 0; color: #ffffff;">Tambah Acara Baru</h3>
+        <button type="button" onclick="closeEventModal()" style="background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer;">✕</button>
+      </div>
+      
+      <form id="event-form" onsubmit="handleSaveEvent(event)">
+        <input type="hidden" id="event-edit-id" value="">
+        
+        <div class="form-group">
+          <label class="form-label" for="input-event-title">1. Nama Acara</label>
+          <input type="text" id="input-event-title" class="form-input" placeholder="Contoh: Retreat Pemuda SIS Busan 2026" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-event-date">2. Tanggal & Waktu</label>
+          <input type="text" id="input-event-date" class="form-input" placeholder="Contoh: Sabtu – Minggu, 24–25 Oktober 2026" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-event-location">3. Lokasi</label>
+          <input type="text" id="input-event-location" class="form-input" placeholder="Contoh: Songjeong Beach Pension / Bexco Lt. 2" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-event-note">4. Note Tambahan / Keterangan</label>
+          <textarea id="input-event-note" class="form-textarea" style="min-height: 85px;" placeholder="Contoh: Pendaftaran dibuka untuk seluruh jemaat. Disediakan transportasi bus bersama dari gereja."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+          <button type="button" class="btn-outline" onclick="closeEventModal()">Batal</button>
+          <button type="submit" class="modal-btn" style="width: auto; padding: 0.65rem 1.5rem;" id="btn-save-event">
+            <i class="fa-solid fa-check"></i> Simpan Acara
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Success Toast -->
   <div class="toast" id="toast">
@@ -786,6 +1044,10 @@
     // Configuration
     const CLOUD_ENDPOINT = 'https://api.npoint.io/2b11d95a7b2b7a8a1776';
     const ADMIN_PASSWORD_HASH = 'sisbusan2026'; // Default admin password
+
+    // Global State
+    let currentEvents = [];
+    let youtubeLiveActive = true;
 
     // Check login state
     window.addEventListener('DOMContentLoaded', () => {
@@ -811,6 +1073,50 @@
       sessionStorage.removeItem('sis_admin_auth');
       localStorage.removeItem('sis_admin_auth');
       window.location.reload();
+    }
+
+    // Tab Navigation
+    function switchAdminTab(tab) {
+      const tabWeekly = document.getElementById('tab-btn-weekly');
+      const tabEvents = document.getElementById('tab-btn-events');
+      const contentWeekly = document.getElementById('tab-content-weekly');
+      const contentEvents = document.getElementById('tab-content-events');
+
+      if (tab === 'events') {
+        tabWeekly.classList.remove('active');
+        tabEvents.classList.add('active');
+        contentWeekly.style.display = 'none';
+        contentEvents.style.display = 'block';
+        renderAdminEventsList();
+      } else {
+        tabEvents.classList.remove('active');
+        tabWeekly.classList.add('active');
+        contentEvents.style.display = 'none';
+        contentWeekly.style.display = 'block';
+        updateLivePreview();
+      }
+    }
+
+    // YouTube Live Streaming Toggle Handlers
+    function handleYoutubeToggleChange() {
+      const checkbox = document.getElementById('toggle-youtube-live');
+      youtubeLiveActive = checkbox ? checkbox.checked : true;
+      updateYoutubeToggleUI();
+    }
+
+    function updateYoutubeToggleUI() {
+      const checkbox = document.getElementById('toggle-youtube-live');
+      const label = document.getElementById('youtube-toggle-label');
+      if (checkbox) checkbox.checked = youtubeLiveActive;
+      if (label) {
+        if (youtubeLiveActive) {
+          label.style.color = 'var(--accent-green)';
+          label.innerHTML = '🔴 Live Aktif';
+        } else {
+          label.style.color = 'var(--text-muted)';
+          label.innerHTML = '⚪ Live Nonaktif (Off)';
+        }
+      }
     }
 
     // Load active cloud data into form
@@ -843,6 +1149,24 @@
       if (data.description) document.getElementById('input-desc').value = data.description;
       const openBtn = document.getElementById('link-open-ig');
       if (data.instagramUrl && openBtn) openBtn.href = data.instagramUrl;
+
+      // Handle YouTube Live state
+      if (data.youtubeLive !== undefined) {
+        youtubeLiveActive = !!data.youtubeLive;
+      } else {
+        youtubeLiveActive = true;
+      }
+      updateYoutubeToggleUI();
+
+      // Handle Upcoming Events
+      if (Array.isArray(data.upcomingEvents)) {
+        currentEvents = data.upcomingEvents;
+      } else {
+        currentEvents = [];
+      }
+      updateEventsBadge();
+      renderAdminEventsList();
+
       updateLivePreview();
     }
 
@@ -1167,15 +1491,9 @@
       }
     }
 
-    // Save to Cloud Endpoint (npoint.io)
-    async function handleSave(e) {
-      if (e && e.preventDefault) e.preventDefault();
-      const btn = document.getElementById('btn-save');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan ke Cloud...';
-      btn.disabled = true;
-
-      const payload = {
+    // Unified payload builder
+    function buildCurrentPayload() {
+      return {
         instagramUrl: document.getElementById('input-ig-url').value.trim(),
         imageUrl: document.getElementById('input-img-url').value.trim(),
         theme: document.getElementById('input-theme').value.trim(),
@@ -1183,39 +1501,214 @@
         schedule: document.getElementById('input-schedule').value.trim(),
         location: document.getElementById('input-location').value.trim(),
         description: document.getElementById('input-desc').value.trim(),
+        youtubeLive: youtubeLiveActive,
+        upcomingEvents: currentEvents,
         updatedAt: new Date().toISOString()
       };
+    }
+
+    // Save full payload to cloud & local storage
+    async function saveFullCloudPayload(successMsg = "Perubahan berhasil disimpan!") {
+      const payload = buildCurrentPayload();
+      try {
+        localStorage.setItem('sis_weekly_service', JSON.stringify(payload));
+      } catch (e) {}
 
       try {
-        let cloudSaved = false;
-        try {
-          const res = await fetch(CLOUD_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: AbortSignal.timeout(6000)
-          });
-          if (res.ok) cloudSaved = true;
-        } catch (cloudErr) {
-          console.warn('Cloud endpoint warning:', cloudErr);
-        }
+        const res = await fetch(CLOUD_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(6000)
+        });
+        showToast(`🎉 ${successMsg}`);
+        return res.ok;
+      } catch (cloudErr) {
+        console.warn('Cloud endpoint warning:', cloudErr);
+        showToast(`✓ ${successMsg} (Tersimpan di browser)`);
+        return false;
+      }
+    }
 
-        // Always save to localStorage so the website updates immediately
-        try {
-          localStorage.setItem('sis_weekly_service', JSON.stringify(payload));
-        } catch (e) {}
+    // Save to Cloud Endpoint from Tab 1 (warta & youtube live)
+    async function handleSave(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const btn = document.getElementById('btn-save');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan ke Cloud...';
+      btn.disabled = true;
 
-        if (cloudSaved) {
-          showToast("🎉 Perubahan berhasil disimpan! Website utama sudah ter-update secara real-time.");
-        } else {
-          showToast("🎉 Perubahan berhasil disimpan! (Tersimpan di cache & cloud fallback)");
-        }
+      try {
+        await saveFullCloudPayload("Perubahan warta & status live berhasil disimpan! Website utama sudah ter-update.");
       } catch (err) {
         alert("Terjadi kesalahan saat menyimpan data: " + err.message);
       } finally {
         btn.innerHTML = originalText;
         btn.disabled = false;
       }
+    }
+
+    // Upcoming Events Management Functions
+    function updateEventsBadge() {
+      const badge = document.getElementById('events-count-badge');
+      if (badge) badge.textContent = currentEvents.length;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function renderAdminEventsList() {
+      const container = document.getElementById('admin-events-list');
+      if (!container) return;
+
+      if (!currentEvents || currentEvents.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 3rem 1.5rem; background: rgba(7, 14, 28, 0.4); border: 1px dashed rgba(255, 255, 255, 0.15); border-radius: var(--radius-md); margin-top: 1rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 0.75rem; color: var(--text-dim);"><i class="fa-solid fa-calendar-xmark"></i></div>
+            <h3 style="color: #ffffff; font-size: 1.15rem; margin-bottom: 0.35rem;">Belum Ada Acara Mendatang</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; max-width: 420px; margin: 0 auto 1.25rem auto;">
+              Tambahkan acara gereja seperti Retreat, Persekutuan Doa, Seminar, Outing, atau Ibadah Khusus untuk langsung ditampilkan di beranda website.
+            </p>
+            <button type="button" class="modal-btn" onclick="openEventModal()" style="width: auto; padding: 0.6rem 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem; margin: 0 auto;">
+              <i class="fa-solid fa-plus"></i> Tambah Acara Pertama
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '<div class="events-grid-admin">';
+      currentEvents.forEach(ev => {
+        const titleSafe = escapeHtml(ev.title || 'Acara Tanpa Judul');
+        const dateSafe = escapeHtml(ev.date || '-');
+        const locationSafe = escapeHtml(ev.location || '-');
+        const noteSafe = escapeHtml(ev.note || '');
+
+        html += `
+          <div class="event-card-admin" id="card-${ev.id}">
+            <div class="event-card-top">
+              <div style="font-size: 1.1rem; font-weight: 700; color: #ffffff; font-family: 'Outfit', sans-serif;">
+                ${titleSafe}
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; color: var(--text-main); margin-top: 0.35rem;">
+                <div><i class="fa-regular fa-calendar" style="color: var(--accent-gold); width: 20px;"></i> ${dateSafe}</div>
+                <div><i class="fa-solid fa-location-dot" style="color: var(--primary-light); width: 20px;"></i> ${locationSafe}</div>
+                ${noteSafe ? `<div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; line-height: 1.4;"><i class="fa-regular fa-note-sticky" style="width: 20px;"></i> ${noteSafe}</div>` : ''}
+              </div>
+            </div>
+            <div class="event-card-actions">
+              <button type="button" class="btn-action-icon" onclick="openEventModal('${ev.id}')">
+                <i class="fa-solid fa-pen"></i> Edit
+              </button>
+              <button type="button" class="btn-action-icon danger" onclick="deleteEvent('${ev.id}')">
+                <i class="fa-solid fa-trash-can"></i> Hapus
+              </button>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    function openEventModal(editId = null) {
+      const modal = document.getElementById('event-modal');
+      const titleEl = document.getElementById('event-modal-title');
+      const form = document.getElementById('event-form');
+      form.reset();
+
+      if (editId) {
+        const ev = currentEvents.find(e => e.id === editId);
+        if (ev) {
+          titleEl.textContent = 'Edit Acara';
+          document.getElementById('event-edit-id').value = ev.id;
+          document.getElementById('input-event-title').value = ev.title || '';
+          document.getElementById('input-event-date').value = ev.date || '';
+          document.getElementById('input-event-location').value = ev.location || '';
+          document.getElementById('input-event-note').value = ev.note || '';
+        }
+      } else {
+        titleEl.textContent = 'Tambah Acara Baru';
+        document.getElementById('event-edit-id').value = '';
+      }
+
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('input-event-title').focus();
+      }, 50);
+    }
+
+    function closeEventModal() {
+      document.getElementById('event-modal').style.display = 'none';
+    }
+
+    async function handleSaveEvent(e) {
+      e.preventDefault();
+      const editId = document.getElementById('event-edit-id').value;
+      const title = document.getElementById('input-event-title').value.trim();
+      const date = document.getElementById('input-event-date').value.trim();
+      const location = document.getElementById('input-event-location').value.trim();
+      const note = document.getElementById('input-event-note').value.trim();
+
+      if (!title || !date || !location) {
+        showToast('Harap isi Nama Acara, Tanggal & Waktu, serta Lokasi.', true);
+        return;
+      }
+
+      const btn = document.getElementById('btn-save-event');
+      const origText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+      btn.disabled = true;
+
+      if (editId) {
+        const idx = currentEvents.findIndex(ev => ev.id === editId);
+        if (idx !== -1) {
+          currentEvents[idx] = {
+            ...currentEvents[idx],
+            title,
+            date,
+            location,
+            note
+          };
+        }
+      } else {
+        const newEvent = {
+          id: 'event_' + Date.now(),
+          title,
+          date,
+          location,
+          note
+        };
+        currentEvents.push(newEvent);
+      }
+
+      closeEventModal();
+      renderAdminEventsList();
+      updateEventsBadge();
+
+      await saveFullCloudPayload(editId ? 'Acara berhasil diperbarui di website!' : 'Acara baru berhasil ditambahkan ke website!');
+      btn.innerHTML = origText;
+      btn.disabled = false;
+    }
+
+    async function deleteEvent(id) {
+      const ev = currentEvents.find(e => e.id === id);
+      const title = ev ? `"${ev.title}"` : 'acara ini';
+      if (!confirm(`Apakah Anda yakin ingin menghapus ${title}?`)) {
+        return;
+      }
+
+      currentEvents = currentEvents.filter(e => e.id !== id);
+      renderAdminEventsList();
+      updateEventsBadge();
+      await saveFullCloudPayload('Acara berhasil dihapus dari website!');
     }
 
     function showToast(msg, isWarning = false) {
