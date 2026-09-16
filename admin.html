@@ -190,6 +190,10 @@
       position: relative;
     }
 
+    .input-wrapper .form-input {
+      padding-right: 175px;
+    }
+
     .form-input, .form-textarea {
       width: 100%;
       background: rgba(7, 14, 28, 0.8);
@@ -678,6 +682,57 @@
         position: static;
       }
     }
+
+    @media (max-width: 640px) {
+      .admin-main {
+        margin: 1.25rem auto;
+        padding: 0 0.85rem;
+      }
+
+      .panel {
+        padding: 1.25rem 1rem;
+        border-radius: var(--radius-md);
+      }
+
+      .input-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .input-wrapper .form-input {
+        padding-right: 1rem;
+      }
+
+      .input-addon-btn {
+        position: static;
+        width: 100%;
+        height: 42px;
+        justify-content: center;
+        padding: 0.6rem 1rem;
+        font-size: 0.84rem;
+        border-radius: var(--radius-sm);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .admin-tabs-nav {
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      .admin-tab-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .header-container {
+        flex-wrap: wrap;
+      }
+    }
   </style>
 </head>
 <body>
@@ -768,31 +823,31 @@
 
             <!-- Instagram URL -->
             <div class="form-group">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.35rem;">
                 <label class="form-label" for="input-ig-url" style="margin-bottom: 0;">1. Link Postingan Instagram</label>
-              <a href="https://instagram.com/gerejasis_official" id="link-open-ig" target="_blank" rel="noopener noreferrer" style="font-size: 0.76rem; color: var(--primary-light); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;">
-                <i class="fa-brands fa-instagram"></i> Buka di Instagram ↗
-              </a>
+                <a href="https://instagram.com/gerejasis_official" id="link-open-ig" target="_blank" rel="noopener noreferrer" style="font-size: 0.76rem; color: var(--primary-light); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem;">
+                  <i class="fa-brands fa-instagram"></i> Buka di Instagram ↗
+                </a>
+              </div>
+              <div class="input-wrapper">
+                <input type="url" 
+                       id="input-ig-url" 
+                       class="form-input" 
+                       placeholder="https://www.instagram.com/p/..." 
+                       required
+                       oninput="handleIgUrlInput()"
+                       onpaste="setTimeout(handleIgUrlInput, 50)">
+                <button type="button" class="input-addon-btn" onclick="fetchInstagramData(false)" id="btn-fetch">
+                  <i class="fa-brands fa-instagram"></i> Ambil Info Otomatis
+                </button>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.35rem; flex-wrap: wrap; gap: 0.35rem;">
+                <small style="font-size: 0.76rem; color: var(--text-dim); word-break: break-all;">
+                  Contoh: <code>https://www.instagram.com/p/DdL19oFzwx0/</code>
+                </small>
+                <div id="ig-fetch-status" style="font-size: 0.76rem; font-weight: 600; display: none;"></div>
+              </div>
             </div>
-            <div class="input-wrapper">
-              <input type="url" 
-                     id="input-ig-url" 
-                     class="form-input" 
-                     placeholder="https://www.instagram.com/p/..." 
-                     required
-                     oninput="handleIgUrlInput()"
-                     onpaste="setTimeout(handleIgUrlInput, 50)">
-              <button type="button" class="input-addon-btn" onclick="fetchInstagramData(false)" id="btn-fetch">
-                <i class="fa-brands fa-instagram"></i> Ambil Info Otomatis
-              </button>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.35rem; flex-wrap: wrap; gap: 0.35rem;">
-              <small style="font-size: 0.76rem; color: var(--text-dim);">
-                Contoh: <code>https://www.instagram.com/p/DdL19oFzwx0/</code>
-              </small>
-              <div id="ig-fetch-status" style="font-size: 0.76rem; font-weight: 600; display: none;"></div>
-            </div>
-          </div>
 
           <!-- Quick Caption Parser Tool -->
           <div style="background: rgba(14, 116, 144, 0.08); border: 1px dashed rgba(56, 189, 248, 0.25); border-radius: var(--radius-sm); padding: 0.75rem 1rem; margin-bottom: 1.25rem;">
