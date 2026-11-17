@@ -6,8 +6,8 @@ Official website for **Sooyoungro Indonesia Service (SIS)** — Indonesian Chris
 
 ## 🌟 Key Features
 
-- **Branded Design & Header**: Official church emblem, motto (*"Our Church, Your Home"*), and bilingual identification (*Gereja Indonesia di Busan*).
-- **Hero Photo Slideshow**: Rotating congregation photo slideshow (auto-advance, prev/next & dot navigation) with theme scripture (*Mazmur 119:105*) — 9 real photos from Sunday services, church gatherings, Christmas, birthdays, and retreats.
+- **Branded Design & Header**: Official church emblem, motto (_"Our Church, Your Home"_), and bilingual identification (_Gereja Indonesia di Busan_).
+- **Hero Photo Slideshow**: Rotating congregation photo slideshow (auto-advance, prev/next & dot navigation) with theme scripture (_Mazmur 119:105_) — 9 real photos from Sunday services, church gatherings, Christmas, birthdays, and retreats.
 - **Live Sunday Countdown**: Real-time interactive countdown timer calculating the time remaining until next Sunday's 12:00 PM KST service, with a live "sedang berlangsung" state during the service.
 - **Weekly Fellowship & Worship Schedule**:
   - Sunday Service: 12:00 – 14:00 KST (Lantai 2 Vision Center)
@@ -20,7 +20,7 @@ Official website for **Sooyoungro Indonesia Service (SIS)** — Indonesian Chris
 - **Community Activities**: Highlights for university students, workers, retreats, and newcomers in Busan, plus an **Upcoming Activities** template section (currently empty, ready for Retreat/Natal/Hangout announcements).
 - **Location & South Korea Navigation**:
   - Subway directions: **Bexco Station (벡스코역), Exit 1**, walk straight 80m.
-  - Building photo guide with **Lantai 2 (2nd Floor)** callout.
+  - Building photo guide with **Lantai 9 (9th Floor)** callout.
   - **1-Click "Salin Alamat"**: Copies Korean address (`부산광역시 해운대구 해운대로 402 수영로교회 비전센터 2층`) with toast notification.
   - **Direct Map Buttons**: Naver Map (네이버 지도), KakaoMap (카카오맵), and Google Maps.
   - **Kontak Resmi**: Email, Instagram, TikTok, YouTube, Facebook, and WhatsApp — using standard Font Awesome brand icons.
@@ -34,6 +34,7 @@ Official website for **Sooyoungro Indonesia Service (SIS)** — Indonesian Chris
 Website ini dibuat menggunakan arsitektur **Pure Static Frontend (HTML5, CSS3, Vanilla JavaScript)** tanpa dependensi npm/build, sehingga dapat langsung di-hosting di GitHub Pages secara gratis.
 
 ### Langkah-langkah:
+
 1. **Commit & Push ke GitHub**:
    ```bash
    git add .
@@ -42,7 +43,7 @@ Website ini dibuat menggunakan arsitektur **Pure Static Frontend (HTML5, CSS3, V
    ```
 2. **Buka Pengaturan Repository di GitHub**:
    - Masuk ke tab **Settings** di repository GitHub Anda (`gerejasis-website`).
-   - Di menu sebelah kiri, klik **Pages** (di bawah bagian *Code and automation*).
+   - Di menu sebelah kiri, klik **Pages** (di bawah bagian _Code and automation_).
 3. **Pilih Sumber Build & Deploy**:
    - Di bagian **Build and deployment** > **Source**, pilih **Deploy from a branch**.
    - Di bawah **Branch**, pilih `main` (atau `master`) dan folder `/ (root)`.
@@ -97,6 +98,7 @@ gerejasis-website/
 ## 🌐 Multi-language (i18n)
 
 Semua teks yang ditandai atribut `data-i18n` / `data-i18n-html` diterjemahkan lewat kamus `translations` di `assets/js/main.js` (key `id`, `en`, `kr`). Bahasa Indonesia adalah versi acuan (source of truth) — setiap penambahan teks baru di `index.html` harus:
+
 1. Ditulis dalam Bahasa Indonesia langsung di HTML dengan atribut `data-i18n="namaKey"`.
 2. Ditambahkan key yang sama persis ke ketiga blok bahasa (`id`, `en`, `kr`) di `translations`.
 
@@ -105,6 +107,7 @@ Semua teks yang ditandai atribut `data-i18n` / `data-i18n-html` diterjemahkan le
 ## 🔐 Halaman Khusus Admin (`/admin` / `admin.html`)
 
 Untuk mengupdate poster Ibadah Raya Minggu dan tema khotbah setiap pekan secara **real-time tanpa perlu melakukan git commit**:
+
 1. Buka halaman `https://<domain-website>/admin.html` (atau `/admin`).
 2. Masukkan password admin (default: `sisbusan2026`).
 3. Masukkan link postingan Instagram terbaru (misal: `https://www.instagram.com/p/DclUqbjE42Y/`).
