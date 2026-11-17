@@ -924,7 +924,7 @@
               <input type="text" 
                      id="input-schedule" 
                      class="form-input" 
-                     value="Setiap Minggu, 12:00 – 14:00 KST"
+                     value="Setiap Minggu, 10:30 – 12:30 KST"
                      required
                      oninput="handleInputChange()">
             </div>
@@ -933,7 +933,7 @@
               <input type="text" 
                      id="input-location" 
                      class="form-input" 
-                     value="Vision Center Lt. 2 (Bexco Exit 1)"
+                     value="Vision Center Lt. 9 (Bexco Exit 1)"
                      required
                      oninput="handleInputChange()">
             </div>
@@ -997,11 +997,11 @@
               </div>
               <div class="poster-meta-item">
                 <span>🕒</span>
-                <span id="preview-schedule">Setiap Minggu, 12:00 – 14:00 KST</span>
+                <span id="preview-schedule">Setiap Minggu, 10:30 – 12:30 KST</span>
               </div>
               <div class="poster-meta-item">
                 <span>📍</span>
-                <span id="preview-location">Vision Center Lt. 2 (Bexco Exit 1)</span>
+                <span id="preview-location">Vision Center Lt. 9 (Bexco Exit 1)</span>
               </div>
             </div>
 
@@ -1068,7 +1068,7 @@
 
         <div class="form-group">
           <label class="form-label" for="input-event-location">3. Lokasi</label>
-          <input type="text" id="input-event-location" class="form-input" placeholder="Contoh: Songjeong Beach Pension / Bexco Lt. 2" required>
+          <input type="text" id="input-event-location" class="form-input" placeholder="Contoh: Songjeong Beach Pension / Vision Center Lt. 9" required>
         </div>
 
         <div class="form-group">
@@ -1370,7 +1370,7 @@
         foundAny = true;
       } else if (dateMatch) {
         let dt = dateMatch[1].trim();
-        if (!dt.toLowerCase().includes('12.00') && !dt.toLowerCase().includes('kst')) dt += ', 12.00 PM KST';
+        if (!dt.toLowerCase().includes('10:30') && !dt.toLowerCase().includes('10.30') && !dt.toLowerCase().includes('kst')) dt += ', 10:30 AM KST';
         document.getElementById('input-schedule').value = dt;
         foundAny = true;
       }
@@ -1379,8 +1379,8 @@
       const locMatch = clean.match(/(?:📍)\s*([^\n\r]+)/u);
       if (locMatch && locMatch[1]) {
         let loc = locMatch[1].trim();
-        if (loc.includes('Olympic') || loc.includes('Gedung Olympic')) {
-          document.getElementById('input-location').value = "Gedung Olympic Lt. 2 (Bexco Exit 1)";
+        if (loc.includes('Vision') || loc.includes('Olympic') || loc.includes('Gedung Olympic')) {
+          document.getElementById('input-location').value = "Vision Center Lt. 9 (Bexco Exit 1)";
         } else {
           document.getElementById('input-location').value = loc.slice(0, 45);
         }
@@ -1417,8 +1417,8 @@
       if (img) document.getElementById('preview-img').src = img;
       document.getElementById('preview-title').textContent = theme || "“Tema Khotbah Akan Muncul di Sini”";
       document.getElementById('preview-speaker').textContent = speaker || "Pembicara: Pdt. Nama Pembicara";
-      document.getElementById('preview-schedule').textContent = schedule || "Setiap Minggu, 12:00 – 14:00 KST";
-      document.getElementById('preview-location').textContent = location || "Vision Center Lt. 2 (Bexco Exit 1)";
+      document.getElementById('preview-schedule').textContent = schedule || "Setiap Minggu, 10:30 – 12:30 KST";
+      document.getElementById('preview-location').textContent = location || "Vision Center Lt. 9 (Bexco Exit 1)";
       document.getElementById('preview-desc').textContent = desc || "Keterangan warta ibadah minggu ini akan tampil di bagian ini.";
     }
 

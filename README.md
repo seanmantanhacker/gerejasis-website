@@ -8,9 +8,9 @@ Official website for **Sooyoungro Indonesia Service (SIS)** — Indonesian Chris
 
 - **Branded Design & Header**: Official church emblem, motto (_"Our Church, Your Home"_), and bilingual identification (_Gereja Indonesia di Busan_).
 - **Hero Photo Slideshow**: Rotating congregation photo slideshow (auto-advance, prev/next & dot navigation) with theme scripture (_Mazmur 119:105_) — 9 real photos from Sunday services, church gatherings, Christmas, birthdays, and retreats.
-- **Live Sunday Countdown**: Real-time interactive countdown timer calculating the time remaining until next Sunday's 12:00 PM KST service, with a live "sedang berlangsung" state during the service.
+- **Live Sunday Countdown**: Real-time interactive countdown timer calculating the time remaining until next Sunday's 10:30 AM KST service, with a live "sedang berlangsung" state during the service.
 - **Weekly Fellowship & Worship Schedule**:
-  - Sunday Service: 12:00 – 14:00 KST (Lantai 2 Vision Center)
+  - Sunday Service: 10:30 – 12:30 KST (Lantai 9 Vision Center)
   - Komsel Daerah Kyungsung: setiap Rabu, 19:00 – 21:00 KST
   - Komsel Daerah Busan University (Online): setiap Kamis, 21:00 KST
   - Bible Study: setiap Sabtu, 18:00 – 21:00 KST
@@ -70,7 +70,7 @@ gerejasis-website/
 │   └── images/
 │       ├── logo.png              # Logo resmi gereja Sooyoungro (dipakai di header, favicon, footer)
 │       ├── hero-congregation.jpg # Foto jemaat SIS (slide 1 hero slideshow)
-│       ├── building-exterior.jpg # Foto gedung Vision Center lantai 2 (section Find Us)
+│       ├── building-exterior.jpg # Foto gedung Vision Center lantai 9 (section Find Us)
 │       ├── follow-badge.png      # Aset cadangan, belum dipakai di halaman
 │       ├── logo-emblem.png       # Aset cadangan, belum dipakai di halaman
 │       ├── logo-transparent.png  # Aset cadangan, belum dipakai di halaman

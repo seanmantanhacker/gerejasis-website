@@ -52,24 +52,30 @@ function initCountdown() {
     const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
     const kstTime = new Date(utcTime + (3600000 * 9));
 
-    // Target: Next Sunday at 12:00:00 KST
+    // Target: Sunday at 10:30:00 KST
     const target = new Date(kstTime);
     const dayOfWeek = kstTime.getDay(); // 0 is Sunday
     let daysUntilSunday = (7 - dayOfWeek) % 7;
 
-    // Set target to this Sunday at 12:00 PM KST
+    // Set target to this Sunday at 10:30 AM KST
     target.setDate(kstTime.getDate() + daysUntilSunday);
-    target.setHours(12, 0, 0, 0);
+    target.setHours(10, 30, 0, 0);
 
-    // If today is Sunday and it's already past 14:00 KST (service finished), target next Sunday
-    if (dayOfWeek === 0 && kstTime.getHours() >= 14) {
+    // Define Sunday service end time (12:30:00 KST)
+    const serviceEnd = new Date(target);
+    serviceEnd.setHours(12, 30, 0, 0);
+
+    // If today is Sunday and current time is past 12:30 KST (service finished), target next Sunday
+    if (dayOfWeek === 0 && kstTime.getTime() >= serviceEnd.getTime()) {
       target.setDate(target.getDate() + 7);
     }
 
     const diff = target.getTime() - kstTime.getTime();
 
-    // If currently between Sunday 12:00 and 14:00 KST
-    if (dayOfWeek === 0 && kstTime.getHours() >= 12 && kstTime.getHours() < 14) {
+    // If today is Sunday and currently between 10:30 and 12:30 KST (service is live)
+    const serviceStart = new Date(kstTime);
+    serviceStart.setHours(10, 30, 0, 0);
+    if (dayOfWeek === 0 && kstTime.getTime() >= serviceStart.getTime() && kstTime.getTime() < serviceEnd.getTime()) {
       if (subtitleEl) subtitleEl.textContent = t('countdownLive');
       daysEl.textContent = '00';
       hoursEl.textContent = '00';
@@ -314,7 +320,7 @@ const translations = {
     btnDirections: "Petunjuk Arah ke Gereja",
     btnOnline: "Ibadah Online (YouTube Live) ↗",
     countdownTitle: "Ibadah Raya Minggu Berikutnya",
-    countdownSubtitle: "Setiap Minggu Pukul 12:00 - 14:00 KST (Waktu Korea)",
+    countdownSubtitle: "Setiap Minggu Pukul 10:30 - 12:30 KST (Waktu Korea)",
     countdownLive: "🔴 Sedang Berlangsung (Live Now!) - Bergabunglah bersama kami!",
     timerDays: "Hari",
     timerHours: "Jam",
@@ -323,8 +329,9 @@ const translations = {
     posterBadge: "Tema Pekan Ini",
     posterTitle: "“Berbahagialah Orang Yang Dianiaya”",
     posterSpeaker: "Pembicara: Pdt. Misnan Nanang",
-    posterSchedule: "Minggu, 13 September 2026, 12.00 PM KST",
-    location: "Gedung Olympic Lt. 2 (Bexco Exit 1)",
+    posterSchedule: "Setiap Minggu, 10:30 – 12:30 KST",
+    posterLocation: "Vision Center Lt. 9 (Bexco Exit 1)",
+    location: "Vision Center Lt. 9 (Bexco Exit 1)",
     posterDesc: "Hadirilah kebaktian umum minggu ini bersama keluarga besar SIS di Busan. Pujian penyembahan, pemberitaan firman Tuhan, dan ramah tamah makan siang bersama.",
     posterBtn: "Buka Postingan Instagram ↗",
     posterClickHint: "Klik untuk membuka postingan di Instagram",
@@ -356,7 +363,7 @@ const translations = {
     onlineTitle: "Ibadah Online & Live Streaming",
     onlineSubtitle: "Ikuti siaran langsung Ibadah Raya Minggu serta arsip khotbah firman Tuhan melalui kanal resmi YouTube SIS Indonesia.",
     youtubeBadge: "Live Streaming YouTube Resmi",
-    youtubeDesc: "Ibadah Raya Minggu disiarkan secara langsung (Live Streaming) setiap hari Minggu pukul <strong>12:00 – 14:00 KST</strong> (Waktu Korea). Bagi jemaat, sahabat, dan keluarga yang berhalangan hadir di lokasi, Anda dapat bergabung dalam ibadah dan pujian secara daring.",
+    youtubeDesc: "Ibadah Raya Minggu disiarkan secara langsung (Live Streaming) setiap hari Minggu pukul <strong>10:30 – 12:30 KST</strong> (Waktu Korea). Bagi jemaat, sahabat, dan keluarga yang berhalangan hadir di lokasi, Anda dapat bergabung dalam ibadah dan pujian secara daring.",
     btnOpenYoutube: "Buka YouTube Live Streams ↗",
     btnVisitChannel: "Kunjungi Halaman Channel",
     sectionActivities: "KEHIDUPAN GEREJA",
@@ -465,7 +472,7 @@ const translations = {
     onlineTitle: "Online Service & Live Streaming",
     onlineSubtitle: "Follow the live broadcast of the Sunday Worship Service and past sermon archives through the official YouTube channel of SIS Indonesia.",
     youtubeBadge: "Official YouTube Live Stream",
-    youtubeDesc: "The Sunday Worship Service is broadcast live every Sunday at <strong>12:00 – 14:00 KST</strong> (Korea Time). For members, friends, and family who are unable to attend in person, you are welcome to join the worship and praise online.",
+    youtubeDesc: "The Sunday Worship Service is broadcast live every Sunday at <strong>10:30 – 12:30 KST</strong> (Korea Time). For members, friends, and family who are unable to attend in person, you are welcome to join the worship and praise online.",
     btnOpenYoutube: "Open YouTube Live Streams ↗",
     btnVisitChannel: "Visit Channel Page",
     sectionActivities: "COMMUNITY LIFE",
@@ -532,7 +539,7 @@ const translations = {
     btnDirections: "교회 오시는 길",
     btnOnline: "온라인 예배 (유튜브 라이브) ↗",
     countdownTitle: "다음 주일 대예배",
-    countdownSubtitle: "매주 일요일 12:00 - 14:00 KST (한국시간)",
+    countdownSubtitle: "매주 일요일 10:30 - 12:30 KST (한국시간)",
     countdownLive: "🔴 지금 예배가 진행 중입니다! - 함께 예배드려요!",
     timerDays: "일",
     timerHours: "시간",
@@ -541,7 +548,7 @@ const translations = {
     posterBadge: "이번 주 말씀 주제",
     posterTitle: "“마음이 청결한 자의 복”",
     posterSpeaker: "설교: 미스난 나낭 목사",
-    posterSchedule: "매주 일요일 12:00 – 14:00 KST",
+    posterSchedule: "매주 일요일 10:30 – 12:30 KST",
     posterLocation: "비전센터 9층 (벡스코역 1번 출구)",
     posterDesc: "부산 SIS 공동체와 함께하는 주일 대예배에 참석해 보세요. 은혜로운 찬양과 말씀, 그리고 점심 애찬 교제가 함께합니다.",
     posterBtn: "인스타그램 게시물 보기 ↗",
