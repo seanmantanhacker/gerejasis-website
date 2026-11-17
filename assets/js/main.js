@@ -108,7 +108,7 @@ function initCopyAddress() {
   const copyBtns = document.querySelectorAll('.copy-address-btn');
   const toast = document.getElementById('toast');
 
-  const koreanAddress = "부산광역시 해운대구 해운대로 402, 수영로교회 비전센터 2층";
+  const koreanAddress = "부산광역시 해운대구 해운대로 402, 수영로교회 비전센터 9층";
 
   copyBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -542,7 +542,7 @@ const translations = {
     posterTitle: "“마음이 청결한 자의 복”",
     posterSpeaker: "설교: 미스난 나낭 목사",
     posterSchedule: "매주 일요일 12:00 – 14:00 KST",
-    posterLocation: "비전센터 2층 (벡스코역 1번 출구)",
+    posterLocation: "비전센터 9층 (벡스코역 1번 출구)",
     posterDesc: "부산 SIS 공동체와 함께하는 주일 대예배에 참석해 보세요. 은혜로운 찬양과 말씀, 그리고 점심 애찬 교제가 함께합니다.",
     posterBtn: "인스타그램 게시물 보기 ↗",
     posterClickHint: "인스타그램에서 게시물 보기",
@@ -574,7 +574,7 @@ const translations = {
     onlineTitle: "온라인 예배 및 실시간 스트리밍",
     onlineSubtitle: "SIS 인도네시아 공식 유튜브 채널을 통해 주일 대예배 실시간 방송과 지난 설교를 시청하실 수 있습니다.",
     youtubeBadge: "공식 유튜브 라이브 스트림",
-    youtubeDesc: "주일 대예배는 매주 일요일 <strong>한국시간(KST) 12:00 – 14:00</strong>에 실시간으로 생중계됩니다. 현장에 참석하기 어려운 성도님, 친구, 가족 여러분도 온라인으로 함께 예배와 찬양에 동참하실 수 있습니다.",
+    youtubeDesc: "주일 대예배는 매주 일요일 <strong>한국시간(KST) 10:30 – 12:30</strong>에 실시간으로 생중계됩니다. 현장에 참석하기 어려운 성도님, 친구, 가족 여러분도 온라인으로 함께 예배와 찬양에 동참하실 수 있습니다.",
     btnOpenYoutube: "유튜브 라이브 스트림 열기 ↗",
     btnVisitChannel: "채널 페이지 방문하기",
     sectionActivities: "공동체 생활",
@@ -608,8 +608,8 @@ const translations = {
     labelYoutube: "유튜브:",
     labelFacebook: "페이스북:",
     labelWhatsapp: "왓츠앱:",
-    floorBadge: "2층",
-    buildingCaption: "벡스코역 1번 출구에서 직진 80m를 걸어오시면 건물 정문이 바로 보입니다. 2층으로 올라오시면 SIS 예배실이 있습니다.",
+    floorBadge: "9층",
+    buildingCaption: "벡스코역 1번 출구에서 직진 80m를 걸어오시면 건물 정문이 바로 보입니다. 9층으로 올라오시면 SIS 예배실이 있습니다.",
     footerDesc: "대한예수교장로회 수영로교회 산하, 부산 지역 인도네시아 공동체를 위한 예배 및 교제 사역입니다.",
     footerNavTitle: "메뉴",
     footerHome: "홈",

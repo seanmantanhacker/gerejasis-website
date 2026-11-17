@@ -21,7 +21,7 @@ Official website for **Sooyoungro Indonesia Service (SIS)** — Indonesian Chris
 - **Location & South Korea Navigation**:
   - Subway directions: **Bexco Station (벡스코역), Exit 1**, walk straight 80m.
   - Building photo guide with **Lantai 9 (9th Floor)** callout.
-  - **1-Click "Salin Alamat"**: Copies Korean address (`부산광역시 해운대구 해운대로 402 수영로교회 비전센터 2층`) with toast notification.
+  - **1-Click "Salin Alamat"**: Copies Korean address (`부산광역시 해운대구 해운대로 402 수영로교회 비전센터 9층`) with toast notification.
   - **Direct Map Buttons**: Naver Map (네이버 지도), KakaoMap (카카오맵), and Google Maps.
   - **Kontak Resmi**: Email, Instagram, TikTok, YouTube, Facebook, and WhatsApp — using standard Font Awesome brand icons.
 - **Multi-language Support (ID / EN / KR)**: Nearly all visible text on the page is translatable via a `data-i18n` system; Indonesian is the source-of-truth default. Chosen language persists across visits (`localStorage`).
@@ -120,7 +120,7 @@ Untuk mengupdate poster Ibadah Raya Minggu dan tema khotbah setiap pekan secara 
 
 ## ⛪ Kontak & Informasi Gereja
 
-- **Alamat**: 수영로교회 비전센터 2층, 부산광역시 해운대구 해운대로 402
+- **Alamat**: 수영로교회 비전센터 9층, 부산광역시 해운대구 해운대로 402
 - **Email**: infogerejasis@gmail.com
 - **Instagram**: [@Gerejasis_official](https://instagram.com/Gerejasis_official)
 - **TikTok**: [@Gerejasis_official](https://www.tiktok.com/@gerejasis_official)
